@@ -13,6 +13,7 @@
     "flowbite": "^1.6.3",
     "pinia": "^2.0.32",
     "vue": "^3.2.47",
+    "vue-kinesis": "^2.0.5",
     "vue-router": "^4.1.6"
   },
   "devDependencies": {
