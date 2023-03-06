@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@vueuse/core": "^9.13.0",
+    "bootstrap-icons": "^1.10.3",
     "flowbite": "^1.6.3",
     "pinia": "^2.0.32",
     "vue": "^3.2.47",
