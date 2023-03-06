@@ -1,0 +1,16 @@
+version: '3.10'
+services:
+  backend:
+    build:
+      context: ./backend
+      dockerfile: dockerfile
+    container_name: backend-iotassistant
+    command: /bin/sh -c "while sleep 1000; do :; done"
+    stdin_open: true # docker run -i
+    tty: true        # docker run -t
+    ports:
+      - protocol: tcp
+        published: 8000
+        target: 8000
+    volumes:
+      - ./backend:/root/backend:cached
