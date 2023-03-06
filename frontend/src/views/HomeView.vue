@@ -1,5 +1,5 @@
 <template>
-  <NavbarFooter />
+  <NavbarFooter> </NavbarFooter>
 </template>
 <script>
 import NavbarFooter from "@/layouts/NavbarFooter.vue";
