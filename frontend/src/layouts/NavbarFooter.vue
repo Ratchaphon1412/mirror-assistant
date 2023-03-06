@@ -1,8 +1,7 @@
 <template>
-  <section>
+  <section class="dark:bg-gray-900 bg-gray-100">
     <Navbar />
-
-    <div class="container mx-auto">
+    <div class="mx-auto w-full h-full">
       <slot />
     </div>
     <Footer />
@@ -21,3 +20,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.red {
+  background-color: red;
+}
+</style>
