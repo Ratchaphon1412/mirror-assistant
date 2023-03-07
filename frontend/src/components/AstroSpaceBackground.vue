@@ -7,7 +7,7 @@
       <kinesis-element :strength="10" type="translate">
         <img
           class="h-auto w-full object-cover sm:h-screen absolute blur-[2px]"
-          src="@/assets/images/space-background-final.svg"
+          src="@/assets/images/space-background.svg"
           alt="image description"
         />
         <kinesis-element :strength="600" type="translate">

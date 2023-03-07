@@ -8,8 +8,12 @@
           alt="Flowbite Logo"
         />
         <span
-          class="self-center text-xl font-semibold whitespace-nowrap dark:text-white"
+          class="self-center text-xl font-semibold whitespace-nowrap dark:text-white mr-2"
           >Assistant IOT</span
+        >
+        <span
+          class="bg-purple-100 text-purple-800 text-sm font-medium mr-2 px-2.5 py-0.5 rounded dark:bg-purple-900 dark:text-purple-300"
+          >Alpha</span
         >
       </a>
       <button
