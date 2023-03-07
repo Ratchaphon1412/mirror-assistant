@@ -11,16 +11,21 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
+import environ  # import environ for reading .env file
+import os  # import os for reading environment variables
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+env = environ.Env()  # create environ object
+environ.Env.read_env(os.path.join(BASE_DIR, '.env'))  # read .env file
 
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-qn^xj3x+*32vz1twzo+-7)v3vg=4qe6k#b*-xfgqr8bk2x91ns'
+SECRET_KEY = env('SECRET_KEY_DJANGO')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
