@@ -2,6 +2,7 @@
   <NavbarFooter>
     <div class="mx-auto">
       <AstroSpaceBackground />
+
       <Details />
     </div>
   </NavbarFooter>
