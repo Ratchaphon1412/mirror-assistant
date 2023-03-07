@@ -14,7 +14,9 @@
           <div
             class="absolute inset-0.5 flex flex-col items-center justify-center h-screen"
           >
-            <div class="text-center w-1/5 dark:text-gray-100 text-gray-900">
+            <div
+              class="text-center lg:w-1/5 md:w-2/5 ms:w-3/5 xs:w-4/5 dark:text-gray-100 text-gray-900"
+            >
               <h1
                 class="lg:text-5xl md:text-2xl xs:text-xl font-bold subpixel-antialiased whitespace-pre-line"
               >

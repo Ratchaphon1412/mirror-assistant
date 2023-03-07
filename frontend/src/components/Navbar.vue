@@ -87,6 +87,19 @@
 
 <script>
 import { useDark, useToggle } from "@vueuse/core";
+import {
+  initAccordions,
+  initCarousels,
+  initCollapses,
+  initDials,
+  initDismisses,
+  initDrawers,
+  initDropdowns,
+  initModals,
+  initPopovers,
+  initTabs,
+  initTooltips,
+} from "flowbite";
 
 export default {
   name: "Navbar",
