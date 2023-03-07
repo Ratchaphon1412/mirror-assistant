@@ -1,7 +1,5 @@
 <template>
-  <nav
-    class="bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-900"
-  >
+  <nav class="bg-white border-gray-200 px-2 sm:px-4 py-2.5 dark:bg-gray-900">
     <div class="container flex flex-wrap items-center justify-between mx-auto">
       <a href="https://flowbite.com/" class="flex items-center">
         <img
@@ -11,7 +9,7 @@
         />
         <span
           class="self-center text-xl font-semibold whitespace-nowrap dark:text-white"
-          >Flowbite</span
+          >Assistant IOT</span
         >
       </a>
       <button
@@ -38,7 +36,7 @@
       </button>
       <div class="hidden w-full md:block md:w-auto" id="navbar-default">
         <ul
-          class="flex flex-col p-4 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700"
+          class="flex flex-col items-center p-4 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium md:border-0 md:bg-white dark:bg-gray-800 md:dark:bg-gray-900 dark:border-gray-700"
         >
           <li>
             <a
@@ -62,22 +60,59 @@
               >Services</a
             >
           </li>
+
           <li>
-            <a
-              href="#"
-              class="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-              >Pricing</a
-            >
+            <i
+              :class="[
+                isDark
+                  ? 'bi bi-sun-fill text-gray-100'
+                  : 'bi bi-moon-stars-fill',
+              ]"
+              @click="toggleDark()"
+            ></i>
           </li>
           <li>
-            <a
-              href="#"
-              class="block py-2 pl-3 pr-4 text-gray-700 rounded hover:bg-gray-100 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent"
-              >Contact</a
+            <button
+              type="button"
+              class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-3 md:mr-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
             >
+              Login
+            </button>
           </li>
         </ul>
       </div>
     </div>
   </nav>
 </template>
+
+<script>
+import { useDark, useToggle } from "@vueuse/core";
+import {
+  initAccordions,
+  initCarousels,
+  initCollapses,
+  initDials,
+  initDismisses,
+  initDrawers,
+  initDropdowns,
+  initModals,
+  initPopovers,
+  initTabs,
+  initTooltips,
+} from "flowbite";
+
+export default {
+  name: "Navbar",
+  setup() {
+    const isDark = useDark();
+    const toggleDark = useToggle(isDark);
+
+    return {
+      isDark,
+      toggleDark,
+    };
+  },
+  data() {},
+  methods: {},
+};
+</script>
