@@ -1,7 +1,7 @@
 <template>
   <div class="h-screen text-gray-100 bg-black flex justify-center items-center">
     <div class="">
-      <div class="h-[800px] bg-gray-300 mb-5 hidden">
+      <div class="h-[800px] bg-gray-300 mb-5">
         <iframe
           width="100%"
           height="100%"
@@ -15,10 +15,7 @@
         ></iframe>
       </div>
       <p class="text-center self-center">
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Non tempore
-        voluptate officiis excepturi cum repellat veniam quasi qui dolorum
-        molestias autem, doloribus magni natus ea a, quae cumque consectetur
-        aperiam?
+       {{ transcript }}
       </p>
     </div>
     <!-- <button @click="startListening">Start Listening</button> -->
