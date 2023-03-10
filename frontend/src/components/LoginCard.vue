@@ -26,7 +26,7 @@
             Sign in to your account
           </h1>
           <!--login google facebook and github -->
-          <div class="mt-16 grid space-y-4">
+          <!-- <div class="mt-16 grid space-y-4">
             <button
               class="group h-12 px-6 border-2 border-gray-300 dark:border-gray-700 rounded-full transition duration-300 hover:border-blue-400 focus:bg-blue-50 active:bg-blue-100"
             >
@@ -58,6 +58,7 @@
                 </svg>
                 <span
                   class="block w-max font-semibold tracking-wide text-gray-700 dark:text-white text-sm transition duration-300 group-hover:text-blue-600 sm:text-base"
+                  @click="loginWithGitHub"
                   >Continue with Github</span
                 >
               </div>
@@ -77,15 +78,15 @@
                 >
               </div>
             </button>
-          </div>
+          </div> -->
           <!--line-->
-          <div class="inline-flex items-center justify-center w-full">
+          <!-- <div class="inline-flex items-center justify-center w-full">
             <hr class="w-64 h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
             <span
               class="absolute px-3 font-medium text-gray-900 -translate-x-1/2 bg-transparent left-1/2 dark:text-white dark:bg-transparent"
               >or</span
             >
-          </div>
+          </div> -->
 
           <form class="space-y-4 md:space-y-6" action="#">
             <div>
@@ -100,6 +101,21 @@
                 id="email"
                 class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="name@company.com"
+                required=""
+                v-model="email"
+              />
+            </div>
+            <div>
+              <label
+                for="username"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >Username</label
+              >
+              <input
+                type="username"
+                name="username"
+                class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="Username"
                 required=""
                 v-model="username"
               />
@@ -120,7 +136,7 @@
                 v-model="password"
               />
             </div>
-            <div class="flex items-center justify-between">
+            <!-- <div class="flex items-center justify-between">
               <div class="flex items-start">
                 <div class="flex items-center h-5">
                   <input
@@ -142,7 +158,7 @@
                 class="text-sm font-medium text-gray-500 hover:underline dark:text-white"
                 >Forgot password?</a
               >
-            </div>
+            </div> -->
 
             <button
               type="submit"
@@ -168,16 +184,27 @@
 </template>
 
 <script>
-// import { auth } from "@/helpers/auth/index.js";
-// import { useAuthStore } from "@/stores/authStore.js";
+import { useAuthStore } from "@/stores/auth.js";
 export default {
   name: "LoginCard",
+  setup() {
+    const authStore = useAuthStore();
+
+    return {
+      user: authStore.user,
+      loginWithGitHub: authStore.loginWithGitHub,
+      authGithub: authStore.handleLogin,
+      logout: authStore.logout,
+    };
+  },
   data() {
     return {
       username: "",
+      email: "",
       password: "",
     };
   },
+
   components: {},
   methods: {
     async login() {},

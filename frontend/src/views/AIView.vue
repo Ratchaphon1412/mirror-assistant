@@ -15,10 +15,7 @@
         ></iframe>
       </div>
       <p class="text-center self-center">
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Non tempore
-        voluptate officiis excepturi cum repellat veniam quasi qui dolorum
-        molestias autem, doloribus magni natus ea a, quae cumque consectetur
-        aperiam?
+        {{ transcript }}
       </p>
     </div>
     <!-- <button @click="startListening">Start Listening</button> -->
