@@ -1,7 +1,7 @@
 <template>
   <div class="h-screen text-gray-100 bg-black flex justify-center items-center">
     <div class="">
-      <div class="h-[800px] bg-gray-300 mb-5">
+      <div class="h-[800px] bg-gray-300 mb-5 hidden">
         <iframe
           width="100%"
           height="100%"
