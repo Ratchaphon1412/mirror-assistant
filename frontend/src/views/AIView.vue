@@ -50,17 +50,22 @@ export default {
         let finalTranscript = "";
         for (let i = event.resultIndex; i < event.results.length; ++i) {
           const transcript = event.results[i][0].transcript;
+
           if (event.results[i].isFinal) {
             finalTranscript += transcript;
           } else {
             interimTranscript += transcript;
           }
         }
-        console.log();
-        this.transcript = finalTranscript || interimTranscript;
 
-        if (this.transcript.includes("จาร์วิส")) {
-          this.doSomething(finalTranscript);
+        let transcriptResult = finalTranscript || interimTranscript;
+
+        // this.transcript = interimTranscript;
+
+        if (transcriptResult.startsWith("บอส")) {
+          // console.log(this.transcript);
+
+          this.doSomething(transcriptResult);
         }
       };
       recognition.onend = () => {
@@ -69,7 +74,9 @@ export default {
       recognition.start();
     },
     doSomething(finalTranscript) {
+      this.transcript = finalTranscript;
       console.log(finalTranscript);
+      return;
     },
   },
 };

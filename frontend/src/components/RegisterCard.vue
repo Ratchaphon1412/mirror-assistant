@@ -37,6 +37,23 @@
                 class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 placeholder="name@company.com"
                 required=""
+                v-model="email"
+              />
+            </div>
+            <div>
+              <label
+                for="username"
+                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                >Username</label
+              >
+              <input
+                type="username"
+                name="username"
+                id="username"
+                class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                placeholder="username"
+                required=""
+                v-model="username"
               />
             </div>
             <div>
@@ -52,6 +69,7 @@
                 placeholder="••••••••"
                 class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 required=""
+                v-model="password"
               />
             </div>
             <div>
@@ -61,12 +79,13 @@
                 >Confirm password</label
               >
               <input
-                type="confirm-password"
-                name="confirm-password"
-                id="confirm-password"
+                type="password"
+                name="password"
+                id="password"
                 placeholder="••••••••"
                 class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 required=""
+                v-model="confirmPassword"
               />
             </div>
             <div class="flex items-start">
@@ -77,6 +96,7 @@
                   type="checkbox"
                   class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
                   required=""
+                  v-model="terms"
                 />
               </div>
               <div class="ml-3 text-sm">
@@ -95,6 +115,7 @@
             <button
               type="submit"
               class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-b-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+              @click="register"
             >
               Create an account
             </button>
@@ -114,15 +135,29 @@
 </template>
 
 <script>
+// import { useAuthStore } from "@/stores/auth.js";
+
 export default {
   setup() {},
   data() {
     return {
+      username: "",
       email: "",
       password: "",
       confirmPassword: "",
       terms: false,
     };
+  },
+  methods: {
+    async register() {
+      //   const authStore = useAuthStore();
+
+      if (this.password !== this.confirmPassword) {
+        alert("Passwords do not match");
+        return;
+      }
+      console.log(this.username, this.email, this.password);
+    },
   },
 };
 </script>

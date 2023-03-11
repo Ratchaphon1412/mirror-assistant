@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'djoser',# for authentication
     'corsheaders',# for cross origin resource sharing
+    'api'
     
 ]
 
@@ -101,15 +102,24 @@ CORS_ALLOWED_ORIGINS = [ 'http://localhost:5173','http://127.0.0.1:8080'] # for 
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
     # or allow read-only access for unauthenticated users.
-    'DEFAULT_PERMISSION_CLASSES': [
-        # 'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-        'rest_framework.permissions.IsAuthenticated'
-    ],
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.TokenAuthentication',
+    # 'DEFAULT_PERMISSION_CLASSES': [
+    #     # 'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    #     'rest_framework.permissions.IsAuthenticated'
+    # ],
+    # 'DEFAULT_AUTHENTICATION_CLASSES': (
+    #     'rest_framework.authentication.TokenAuthentication',
        
-    ),
+    # ),
 } 
+# api key
+
+WIT_API = env('witAPI')
+WEATHER_API = env('weatherAPI')
+RAPID_API = env('rapidAPI')
+GOOGLE_API = env('googleAPI')
+GOOGLE_MAP_API = env('googleMapAPI')
+PLAY_HT_API_AUTHORIZATION = env('playhtAPIAuthorization')
+PLAY_API_UserID = env('PLAY_API_UserID')
 
 
 
