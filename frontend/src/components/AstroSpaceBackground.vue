@@ -4,13 +4,14 @@
       class="relative h-screen overflow-y-hidden overflow-x-hidden"
       event="scroll"
     >
-      <kinesis-element :strength="10" type="translate">
+      <kinesis-element :strength="100" type="translate">
         <img
-          class="h-auto w-full object-cover sm:h-screen absolute blur-[2px]"
+          class="h-auto w-full object-cover sm:h-screen absolute"
           src="@/assets/images/space-background.svg"
           alt="image description"
         />
-        <kinesis-element :strength="600" type="translate">
+        <!--text-->
+        <kinesis-element :strength="600" type="translate" axis="y">
           <div
             class="absolute inset-0.5 flex flex-col items-center justify-center h-screen"
           >
@@ -34,7 +35,7 @@
             </div>
           </div>
         </kinesis-element>
-
+        <!--rocket-->
         <kinesis-element :strength="120" type="translate" axis="y">
           <img
             class="h-auto w-full object-cover sm:h-screen absolute"
@@ -42,7 +43,8 @@
             alt="image description"
           />
         </kinesis-element>
-        <kinesis-element :strength="50" type="depth" axis="y">
+        <!--astro-->
+        <kinesis-element :strength="0" type="depth">
           <img
             class="h-auto w-full object-cover sm:h-screen absolute"
             src="@/assets/images/space-astro-rounded.svg"

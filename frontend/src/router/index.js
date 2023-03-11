@@ -18,6 +18,10 @@ const router = createRouter({
       path:'/ai',
       name:'ai',
       component: () => import('@/views/AIView.vue')
+    },{
+      path:'/register',
+      name:'register',
+      component: () => import('@/views/RegisterView.vue')
     }
    
   ]
