@@ -14,22 +14,37 @@
           style=""
         ></iframe>
       </div>
+
+      <!-- <button @click="toggleSpeechRecognition">
+        {{ isRecognitionActive ? "Stop" : "Start" }}
+      </button> -->
+
       <p class="text-center self-center">
-        {{ transcript }}
+        <!-- {{ transcript }} -->
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sit molestiae
+        sapiente nesciunt natus expedita, libero minima dolore porro commodi
+        doloremque tempora eaque esse? Harum, repellat. Vero ipsa exercitationem
+        voluptatibus consequatur? Lorem ipsum dolor sit, amet consectetur
+        adipisicing elit. Consequatur animi doloremque vero incidunt? Placeat
+        illo adipisci delectus esse mollitia beatae dicta nihil ipsum nostrum
+        nesciunt? Eligendi deleniti numquam exercitationem saepe?
       </p>
     </div>
+
     <!-- <button @click="startListening">Start Listening</button> -->
   </div>
 </template>
 
 <script>
 import NavbarFooter from "@/layouts/NavbarFooter.vue";
-
+import { useApiStore } from "@/stores/api";
 export default {
   setup() {},
   data() {
     return {
       transcript: "",
+      recognition: null,
+      apiStore: useApiStore(),
     };
   },
   mounted() {
@@ -40,12 +55,14 @@ export default {
   },
   methods: {
     startListening() {
-      const recognition = new webkitSpeechRecognition();
-      const thaiLang = recognition.lang.search("th-") >= 0 ? "th-TH" : "th-TH";
-      recognition.lang = thaiLang;
-      recognition.continuous = true;
-      recognition.interimResults = true;
-      recognition.onresult = (event) => {
+      this.recognition = new webkitSpeechRecognition();
+      const thaiLang =
+        this.recognition.lang.search("th-") >= 0 ? "th-TH" : "th-TH";
+      this.recognition.lang = thaiLang;
+      this.recognition.continuous = true;
+      this.recognition.interimResults = false;
+
+      this.recognition.onresult = (event) => {
         let interimTranscript = "";
         let finalTranscript = "";
         for (let i = event.resultIndex; i < event.results.length; ++i) {
@@ -58,25 +75,78 @@ export default {
           }
         }
 
-        let transcriptResult = finalTranscript || interimTranscript;
+        // let transcriptResult = finalTranscript || interimTranscript;
+        // this.transcript = finalTranscript;
 
         // this.transcript = interimTranscript;
-
-        if (transcriptResult.startsWith("บอส")) {
-          // console.log(this.transcript);
-
-          this.doSomething(transcriptResult);
-        }
+        // this.doSomething(transcriptResult);
+        // if (transcriptResult.startsWith("บอส")) {
+        //   // console.log(this.transcript);
+        this.doSomething(finalTranscript);
+        //   this.doSomething(transcriptResult);
+        // }
       };
-      recognition.onend = () => {
-        recognition.start();
+      this.recognition.onend = () => {
+        this.recognition.start();
       };
-      recognition.start();
+      this.recognition.start();
     },
-    doSomething(finalTranscript) {
-      this.transcript = finalTranscript;
-      console.log(finalTranscript);
+    async doSomething(finalTranscript) {
+      if (finalTranscript.startsWith("บอส")) {
+        this.transcript = finalTranscript;
+        let text = finalTranscript.replace("บอส", "");
+        console.log(text);
+        let response = await this.apiStore.getIntent(text);
+        console.log(response["intent"]);
+        // console.log(response["entities"]["data:data"][0]["value"]);
+        if (response["intent"]) {
+          let intent = response["intent"];
+          switch (intent) {
+            case "search":
+              let data = response["entities"]["data:data"][0]["value"];
+              let responseData = await this.apiStore.getKnowledge(data);
+              console.log(responseData);
+              this.transcript = responseData["answer"];
+              let transcriptVoiceURL = await this.getVoiceTranscript(
+                responseData["answer"]
+              );
+              console.log(transcriptVoiceURL);
+              await this.downloadAndPlay(transcriptVoiceURL["url"]);
+
+              break;
+            case "weather":
+              let dataWeather = response["entities"]["data:data"][0]["value"];
+              let responseDataWeather = await this.apiStore.getWeather(
+                dataWeather
+              );
+
+              break;
+            default:
+              console.err("No intent found!");
+          }
+        }
+      }
+
       return;
+    },
+    async getVoiceTranscript(text) {
+      let response = await this.apiStore.getVoiceTranscript(text);
+
+      return response;
+    },
+    async downloadAndPlay(urlDonwoload) {
+      const url = urlDonwoload;
+
+      try {
+        const response = await fetch(url);
+        const blob = await response.blob();
+        const blobUrl = URL.createObjectURL(blob);
+
+        const audio = new Audio(blobUrl);
+        audio.play();
+      } catch (error) {
+        console.error("Error downloading or playing file:", error);
+      }
     },
   },
 };
