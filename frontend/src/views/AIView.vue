@@ -20,14 +20,14 @@
       </button> -->
 
       <p class="text-center self-center">
-        <!-- {{ transcript }} -->
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sit molestiae
+        {{ transcript }}
+        <!-- Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sit molestiae
         sapiente nesciunt natus expedita, libero minima dolore porro commodi
         doloremque tempora eaque esse? Harum, repellat. Vero ipsa exercitationem
         voluptatibus consequatur? Lorem ipsum dolor sit, amet consectetur
         adipisicing elit. Consequatur animi doloremque vero incidunt? Placeat
         illo adipisci delectus esse mollitia beatae dicta nihil ipsum nostrum
-        nesciunt? Eligendi deleniti numquam exercitationem saepe?
+        nesciunt? Eligendi deleniti numquam exercitationem saepe? -->
       </p>
     </div>
 
@@ -45,6 +45,7 @@ export default {
       transcript: "",
       recognition: null,
       apiStore: useApiStore(),
+      audio: null,
     };
   },
   mounted() {
@@ -115,11 +116,18 @@ export default {
 
               break;
             case "weather":
-              let dataWeather = response["entities"]["data:data"][0]["value"];
+              let dataWeather =
+                response["entities"]["location:location"][0]["value"];
               let responseDataWeather = await this.apiStore.getWeather(
                 dataWeather
               );
-
+              console.log(responseDataWeather);
+              this.transcript = responseDataWeather["weather"];
+              let transcriptVoiceURLWeather = await this.getVoiceTranscript(
+                responseDataWeather["weather"]
+              );
+              console.log(transcriptVoiceURLWeather);
+              await this.downloadAndPlay(transcriptVoiceURLWeather["url"]);
               break;
             default:
               console.err("No intent found!");
@@ -136,17 +144,32 @@ export default {
     },
     async downloadAndPlay(urlDonwoload) {
       const url = urlDonwoload;
+      var audio = new Audio(url);
+      audio.play();
+      // try {
+      //   // Download file from URL
+      //   const response = await fetch(url);
+      //   const arrayBuffer = await response.arrayBuffer();
 
-      try {
-        const response = await fetch(url);
-        const blob = await response.blob();
-        const blobUrl = URL.createObjectURL(blob);
+      //   // Create blob object from file data
+      //   const blob = new Blob([arrayBuffer], { type: "audio/mpeg" });
 
-        const audio = new Audio(blobUrl);
-        audio.play();
-      } catch (error) {
-        console.error("Error downloading or playing file:", error);
-      }
+      //   // Create URL object from blob and set as audio source
+      //   const blobUrl = URL.createObjectURL(blob);
+      //   const audio = new Audio(blobUrl);
+      //   audio.autoplay = true;
+      //   audio.muted = true;
+      //   // this.audio = audio;
+      //   await audio.play();
+
+      //   // When audio playback finishes, revoke the URL object
+      audio.addEventListener("ended", () => {
+        // URL.revokeObjectURL(blobUrl);
+        this.transcript = "";
+      });
+      // } catch (error) {
+      //   console.error("Error downloading or playing file:", error);
+      // }
     },
   },
 };
