@@ -27,10 +27,7 @@
               <p
                 class="font-medium text-base subpixel-antialiased text-center indent-2"
               >
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore
-                numquam voluptatem necessitatibus odit ipsam odio cupiditate, ex
-                architecto modi, fugiat blanditiis cumque! Ex reprehenderit
-                dicta eveniet veniam aliquid officia tenetur?
+                
               </p>
             </div>
           </div>

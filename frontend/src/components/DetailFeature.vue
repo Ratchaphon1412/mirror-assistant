@@ -7,22 +7,31 @@
         <div class="lg:pr-8 lg:pt-4">
           <div class="lg:max-w-lg">
             <h2 class="text-base font-semibold leading-7 text-indigo-600">
-              Deploy faster
+              AI
             </h2>
             <p class="mt-2 text-3xl font-bold tracking-tight sm:text-4xl">
-              A better workflow
+              A better for the future life
             </p>
             <p class="mt-6 text-lg leading-8 text-gray-600">
-              Lorem ipsum, dolor sit amet consectetur adipisicing elit. Maiores
-              impedit perferendis suscipit eaque, iste dolor cupiditate
-              blanditiis ratione.
+              Speech recognition software is another application of AI for listening. 
+              This software is used to transcribe spoken words into written text, making it easier for people to take notes, 
+              create transcripts, and transcribe interviews. This technology has also been used to develop automatic 
+              subtitling for videos and movies.
             </p>
             <dl
               class="mt-10 max-w-xl space-y-8 text-base leading-7 text-gray-600 lg:max-w-none"
             >
               <div class="relative pl-9">
                 <dt class="inline font-semibold">
-                  <svg
+                  <svg xmlns="http://www.w3.org/2000/svg" 
+                        width="16" height="16" 
+                        fill="currentColor" 
+                        class="absolute top-1 left-1 h-5 w-5 text-indigo-600"
+                        viewBox="0 0 16 16">
+                      <path fill-rule="evenodd" 
+                      d="M2 15.5V2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.74.439L8 13.069l-5.26 2.87A.5.5 0 0 1 2 15.5zm8.854-9.646a.5.5 0 0 0-.708-.708L7.5 7.793 6.354 6.646a.5.5 0 1 0-.708.708l1.5 1.5a.5.5 0 0 0 .708 0l3-3z"/>
+                  </svg>
+                  <!-- <svg
                     class="absolute top-1 left-1 h-5 w-5 text-indigo-600"
                     viewBox="0 0 20 20"
                     fill="currentColor"
@@ -33,13 +42,13 @@
                       d="M5.5 17a4.5 4.5 0 01-1.44-8.765 4.5 4.5 0 018.302-3.046 3.5 3.5 0 014.504 4.272A4 4 0 0115 17H5.5zm3.75-2.75a.75.75 0 001.5 0V9.66l1.95 2.1a.75.75 0 101.1-1.02l-3.25-3.5a.75.75 0 00-1.1 0l-3.25 3.5a.75.75 0 101.1 1.02l1.95-2.1v4.59z"
                       clip-rule="evenodd"
                     />
-                  </svg>
-                  Push to deploy.
+                  </svg> -->
+                  VERIFY
                 </dt>
                 <dd class="inline">
-                  Lorem ipsum, dolor sit amet consectetur adipisicing elit.
-                  Maiores impedit perferendis suscipit eaque, iste dolor
-                  cupiditate blanditiis ratione.
+                  can be a powerful tool for verifying information, as it can quickly analyze large 
+                  amounts of data and identify patterns and inconsistencies that may indicate 
+                  misinformation or falsehoods
                 </dd>
               </div>
 
@@ -57,11 +66,12 @@
                       clip-rule="evenodd"
                     />
                   </svg>
-                  SSL certificates.
+                  SECURITY
                 </dt>
                 <dd class="inline">
-                  Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure
-                  qui lorem cupidatat commodo.
+                  is an essential aspect of online security. By using strong and unique passwords, 
+                  changing passwords regularly, and using two-factor authentication, 
+                  we can reduce the risk of unauthorized access to our personal information and accounts.
                 </dd>
               </div>
 
@@ -85,19 +95,18 @@
                   Database backups.
                 </dt>
                 <dd class="inline">
-                  Ac tincidunt sapien vehicula erat auctor pellentesque rhoncus.
-                  Et magna sit morbi lobortis.
+                  is an essential part of database management. By establishing a backup strategy 
+                  that includes regular backups, secure storage, and testing, organizations can 
+                  protect against data loss and ensure that critical data is available when needed.
                 </dd>
               </div>
             </dl>
           </div>
         </div>
         <img
-          src="https://tailwindui.com/img/component-images/dark-project-app-screenshot.png"
+          src="https://media.giphy.com/media/dioml5wsoBZYqJGqip/giphy.gif"
           alt="Product screenshot"
-          class="w-[48rem] max-w-none rounded-xl shadow-xl ring-1 ring-gray-400/10 sm:w-[57rem] md:-ml-4 lg:-ml-0"
-          width="2432"
-          height="1442"
+          class="w-[30rem] max-w-none rounded-xl shadow-xl ring-1 ring-gray-400/10 sm:w-[45rem] md:-ml-4 lg:-ml-0"
         />
       </div>
     </div>
