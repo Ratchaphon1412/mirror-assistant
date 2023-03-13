@@ -129,6 +129,22 @@ export default {
               console.log(transcriptVoiceURLWeather);
               await this.downloadAndPlay(transcriptVoiceURLWeather["url"]);
               break;
+            case "restaurantNearMe":
+              let lat = "13.91060";
+              let long = "100.67590";
+              let responseDataRestaurantNearMe =
+                await this.apiStore.getRestaurantNearMe(lat, long);
+              console.log(responseDataRestaurantNearMe);
+              this.transcript = responseDataRestaurantNearMe["restaurant"];
+              let transcriptVoiceURLRestaurantNearMe =
+                await this.getVoiceTranscript(
+                  responseDataRestaurantNearMe["restaurant"]
+                );
+              console.log(transcriptVoiceURLRestaurantNearMe);
+              await this.downloadAndPlay(
+                transcriptVoiceURLRestaurantNearMe["url"]
+              );
+              break;
             default:
               console.err("No intent found!");
           }
