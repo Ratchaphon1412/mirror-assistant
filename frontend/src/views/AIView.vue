@@ -1,6 +1,7 @@
 <template>
   <div class="h-screen text-gray-100 bg-black flex justify-center items-center">
     <div class="">
+      <img src="@/assets/images/cleverholo.gif" class="w-full h-full object-cover bg-gradient-to-r from-transparent to-gray-900">
       <div class="h-[800px] bg-gray-300 mb-5 hidden">
         <iframe
           width="100%"
@@ -19,16 +20,11 @@
         {{ isRecognitionActive ? "Stop" : "Start" }}
       </button> -->
 
-      <p class="text-center self-center">
-        <!-- {{ transcript }} -->
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sit molestiae
-        sapiente nesciunt natus expedita, libero minima dolore porro commodi
-        doloremque tempora eaque esse? Harum, repellat. Vero ipsa exercitationem
-        voluptatibus consequatur? Lorem ipsum dolor sit, amet consectetur
-        adipisicing elit. Consequatur animi doloremque vero incidunt? Placeat
-        illo adipisci delectus esse mollitia beatae dicta nihil ipsum nostrum
-        nesciunt? Eligendi deleniti numquam exercitationem saepe?
-      </p>
+      <div class="grid grid-cols-6 gap-4">
+        <div></div>
+        <div class="col-span-4 text-center self-center wi">{{ transcript }}</div>
+        <div></div>
+      </div>
     </div>
 
     <!-- <button @click="startListening">Start Listening</button> -->
