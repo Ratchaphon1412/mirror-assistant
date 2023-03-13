@@ -1,7 +1,10 @@
 <template>
   <div class="h-screen text-gray-100 bg-black flex justify-center items-center">
     <div class="">
-      <img src="@/assets/images/cleverholo.gif" class="w-full h-full object-cover bg-gradient-to-r from-transparent to-gray-900">
+      <div class="flex justify-center bg-black">
+        <img src="@/assets/images/giphy.gif" class="object-fill h-20 w-20">
+      </div>
+
       <div class="h-[800px] bg-gray-300 mb-5 hidden">
         <iframe
           width="100%"
