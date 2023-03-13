@@ -13,10 +13,12 @@ import json
 
 from .serializers import *
 
+from .models import   Location
+
 # Create your views here.
 
 knowledge = Knowlegde(settings.WEATHER_API, settings.RAPID_API,
-                      settings.GOOGLE_API, settings.GOOGLE_MAP_API)
+                      settings.GOOGLE_API, settings.GOOGLE_API)
 wit = Wit(settings.WIT_API)
 textToSpeechURL = textTTS({
     "Authorization": settings.PLAY_HT_API_AUTHORIZATION,
@@ -73,3 +75,34 @@ class WeatherAPI(APIView):
             text = knowledge.weather(requestJson.get('city'))
 
             return Response({'weather': text})
+
+class GoogleMapAPI(APIView):
+    def post(self,request):
+        if request.body.decode('utf-8'):
+            requestJson = json.loads(request.body.decode('utf-8'))
+            text = knowledge.findRestaurantNearMe(requestJson.get('lat'),requestJson.get('long'))
+            
+            return Response({'restaurant': text})
+        
+class GeolocationIOT(APIView):
+    def post(self,request):
+        if request.body.decode('utf-8'):
+            requestJson = json.loads(request.body.decode('utf-8'))
+            latitude = requestJson.get('latitude')
+            longitude = requestJson.get('longitude')
+            print(latitude,longitude)
+              # Try to retrieve an existing Location instance with the same latitude and longitude
+            try:
+                location = Location.objects.get(latitude=latitude, longitude=longitude)
+                location.latitude = latitude
+                location.longitude = longitude
+            except Location.DoesNotExist:
+                location = Location(latitude=latitude, longitude=longitude)
+
+        location.save()
+
+        return Response({'success': True})
+    def get(self,request):
+        locations = Location.objects.all()
+        # serializer = LocationSerializer(locations, many=True)
+        return Response({"locations": locations })

@@ -69,8 +69,20 @@ export const useApiStore = defineStore('api', {
 
             return response.data;
 
-        }
-        
+        },
+        async getRestaurantNearMe(lat,long){
+            var data = JSON.stringify({
+                "lat": lat,
+                "long": long
+                });
+
+            const response = await axios.post('/api/v1/restaurant/',data=data,{
+                headers: {
+                    'Content-Type': 'application/json'
+                } });
+             console.log(response.data);
+
+            return response.data;
     }
 
-})
+}})
