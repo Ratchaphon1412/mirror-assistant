@@ -1,6 +1,10 @@
 <template>
   <div class="h-screen text-gray-100 bg-black flex justify-center items-center">
     <div class="">
+      <div class="flex justify-center bg-black">
+        <img src="@/assets/images/giphy.gif" class="object-fill h-20 w-20" />
+      </div>
+
       <div class="h-[800px] bg-gray-300 mb-5 hidden">
         <iframe
           width="100%"
@@ -18,17 +22,28 @@
       <!-- <button @click="toggleSpeechRecognition">
         {{ isRecognitionActive ? "Stop" : "Start" }}
       </button> -->
-      <GoogleMap />
-      <p class="text-center self-center">
+      <!-- <GoogleMap /> -->
+      <!-- <p class="text-center self-center">
         {{ transcript }}
-        <!-- Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sit molestiae
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sit molestiae
         sapiente nesciunt natus expedita, libero minima dolore porro commodi
         doloremque tempora eaque esse? Harum, repellat. Vero ipsa exercitationem
         voluptatibus consequatur? Lorem ipsum dolor sit, amet consectetur
         adipisicing elit. Consequatur animi doloremque vero incidunt? Placeat
         illo adipisci delectus esse mollitia beatae dicta nihil ipsum nostrum
-        nesciunt? Eligendi deleniti numquam exercitationem saepe? -->
-      </p>
+        nesciunt? Eligendi deleniti numquam exercitationem saepe?
+      </p> -->
+
+      <div class="grid grid-cols-6 gap-4">
+        <div></div>
+        <div class="col-span-4 text-center self-center wi">
+          {{ transcript }}
+          <div class="row">
+            <GoogleMap />
+          </div>
+        </div>
+        <div></div>
+      </div>
     </div>
 
     <!-- <button @click="startListening">Start Listening</button> -->
