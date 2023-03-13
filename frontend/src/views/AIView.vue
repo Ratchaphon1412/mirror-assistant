@@ -18,7 +18,7 @@
       <!-- <button @click="toggleSpeechRecognition">
         {{ isRecognitionActive ? "Stop" : "Start" }}
       </button> -->
-
+      <GoogleMap />
       <p class="text-center self-center">
         {{ transcript }}
         <!-- Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sit molestiae
@@ -38,6 +38,7 @@
 <script>
 import NavbarFooter from "@/layouts/NavbarFooter.vue";
 import { useApiStore } from "@/stores/api";
+import GoogleMap from "@/components/GoogleMap.vue";
 export default {
   setup() {},
   data() {
@@ -53,6 +54,7 @@ export default {
   },
   components: {
     NavbarFooter,
+    GoogleMap,
   },
   methods: {
     startListening() {
