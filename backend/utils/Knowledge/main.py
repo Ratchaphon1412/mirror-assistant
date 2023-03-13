@@ -80,13 +80,13 @@ class Knowlegde(Geolocation, Nlg, Weather, KnowledgeGoogle):
 
         return text
 
-    # def findRestaurantNearMe(self):
-    #     lat, long = self.CORE_LOCATION.getCoreLocationMac()
-    #     if (lat == None and long == None):
-    #         return None
-    #     else:
-    #         list_restaurant = self.nearPlaceRestaurant(lat, long)
-    #         print(list_restaurant)
-    #         text = self.ansRestaurant(list_restaurant)
+    def findRestaurantNearMe(self,lat,long):
+        # lat, long = self.CORE_LOCATION.getCoreLocationMac()
+        if (lat == None and long == None):
+            return None
+        else:
+            list_restaurant = self.nearPlaceRestaurant(lat, long)
+            print(list_restaurant)
+            text = self.ansRestaurant(list_restaurant)
 
-    #         return text
+            return text

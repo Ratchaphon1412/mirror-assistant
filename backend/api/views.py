@@ -16,7 +16,7 @@ from .serializers import *
 # Create your views here.
 
 knowledge = Knowlegde(settings.WEATHER_API, settings.RAPID_API,
-                      settings.GOOGLE_API, settings.GOOGLE_MAP_API)
+                      settings.GOOGLE_API, settings.GOOGLE_API)
 wit = Wit(settings.WIT_API)
 textToSpeechURL = textTTS({
     "Authorization": settings.PLAY_HT_API_AUTHORIZATION,
@@ -73,3 +73,11 @@ class WeatherAPI(APIView):
             text = knowledge.weather(requestJson.get('city'))
 
             return Response({'weather': text})
+
+class GoogleMapAPI(APIView):
+    def post(self,request):
+        if request.body.decode('utf-8'):
+            requestJson = json.loads(request.body.decode('utf-8'))
+            text = knowledge.findRestaurantNearMe(requestJson.get('lat'),requestJson.get('long'))
+            
+            return Response({'restaurant': text})

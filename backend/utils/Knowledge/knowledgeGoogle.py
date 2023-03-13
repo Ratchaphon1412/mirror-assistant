@@ -31,13 +31,17 @@ class KnowledgeGoogle:
         return articleList
 
     def nearPlaceRestaurant(self, lat, long):
-        endpoint = f"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location={lat},{long}&radius=1500&type=restaurant&key={self.googleMapKey}&language=th"
+        print(lat,long)
+        endpoint = f"https://maps.googleapis.com/maps/api/place/nearbysearch/json?location={lat}%2C{long}&radius=1500&type=restaurant&key={self.googleMapKey}&language=th"
+        print(endpoint)
+        print(self.googleMapKey)
         response = requests.get(endpoint)
         dict_response = json.loads(response.text)
+        print(dict_response)
         list_restaurant = []
 
         for i in range(len(dict_response['results'])):
-            print(dict_response['results'][i]['name'])
+            # print(dict_response['results'][i]['name'])
             dict_compressrestaurant = {}
             dict_compressrestaurant['name'] = dict_response['results'][i]['name']
             dict_compressrestaurant['geometry'] = dict_response['results'][i]['geometry']
