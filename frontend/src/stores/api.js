@@ -83,6 +83,19 @@ export const useApiStore = defineStore('api', {
              console.log(response.data);
 
             return response.data;
+    },
+    async showMap(place){
+        var data = JSON.stringify({
+            "place": place,
+            });
+
+        const response = await axios.post('/api/v1/place/',data=data,{
+            headers: {
+                'Content-Type': 'application/json'
+            } });
+
+            return response.data;
+        
     }
 
 }})
