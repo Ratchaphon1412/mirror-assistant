@@ -26,7 +26,7 @@ class textTTS:
         }
         response = requests.post(
             endpoint+'convert', headers=headers, json=payloads)
-        time.sleep(5)
+        time.sleep(8)
         # await asyncio.sleep(10)
         print(response.text)
         dic_response = json.loads(response.text)
@@ -34,6 +34,7 @@ class textTTS:
         if (dic_response['status'] == 'CREATED'):
             responseVoice = requests.get(
                 endpoint + 'articleStatus?transcriptionId=' + dic_response['transcriptionId'], headers=headers)
+            print(dic_response['transcriptionId'])
             print(responseVoice.text)
             dic_responseVoice = json.loads(responseVoice.text)
             print(dic_responseVoice)

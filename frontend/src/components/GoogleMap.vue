@@ -214,7 +214,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div ref="mapDiv" id="mapDiv" class="h-[600px] w-[800px]"></div>
+  <div ref="mapDiv" id="mapDiv" class="h-[800px] w-[1000px]"></div>
 
   <!-- <MapboxMap
     style="height: 400px; width: 400px"
