@@ -39,7 +39,7 @@
         <div class="col-span-4 text-center self-center">
           {{ transcript }}
           <div class="">
-            <GoogleMap />
+            <!-- <GoogleMap /> -->
           </div>
         </div>
 
@@ -122,8 +122,8 @@ export default {
           let intent = response["intent"];
           switch (intent) {
             case "search":
-              let data = response["entities"]["data:data"][0]["value"];
-              let responseData = await this.apiStore.getKnowledge(data);
+              // let data = response["entities"]["data:data"][0]["value"];
+              let responseData = await this.apiStore.getKnowledge(text);
               console.log(responseData);
               this.transcript = responseData["answer"];
               let transcriptVoiceURL = await this.getVoiceTranscript(
