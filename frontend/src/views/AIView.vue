@@ -38,10 +38,11 @@
         <div></div>
         <div class="col-span-4 text-center self-center">
           {{ transcript }}
-          <div class="row">
+          <div class="">
             <GoogleMap />
           </div>
         </div>
+
         <div></div>
       </div>
     </div>
