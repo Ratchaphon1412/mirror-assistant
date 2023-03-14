@@ -4,7 +4,21 @@
 import { Loader } from "@googlemaps/js-api-loader";
 import * as THREE from "three";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js";
-import { ref, onMounted } from "vue";
+import { ref, onMounted, defineProps } from "vue";
+
+const props = defineProps({
+  lat: {
+    type: Number,
+    default: 48.8584,
+  },
+  long: {
+    type: Number,
+    default: 2.2945,
+  },
+});
+
+const latProp = ref(props.lat);
+const longProp = ref(props.long);
 
 const apiOptions = {
   apiKey: "AIzaSyDVDXo_WL6ZnT36gKd0bC2_er_gEcyXjhc",
@@ -22,7 +36,7 @@ const mapOptions = {
   tilt: 0,
   heading: 0,
   zoom: 18,
-  center: { lat: 13.84385, lng: 100.56996 },
+  center: { lat: latProp.value, lng: longProp.value },
   mapId: "209e468b6fc515fd",
   styles: [
     { elementType: "geometry", stylers: [{ color: "#242f3e" }] },
@@ -200,7 +214,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div ref="mapDiv" id="mapDiv" style="height: 600px; width: 1000px"></div>
+  <div ref="mapDiv" id="mapDiv" class="h-[600px] w-[800px]"></div>
 
   <!-- <MapboxMap
     style="height: 400px; width: 400px"
@@ -210,3 +224,9 @@ onMounted(() => {
     :zoom="1"
   /> -->
 </template>
+
+<style scoped>
+.red {
+  background-color: red;
+}
+</style>

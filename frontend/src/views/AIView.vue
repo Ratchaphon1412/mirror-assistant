@@ -1,45 +1,21 @@
 <template>
   <div class="h-screen text-gray-100 bg-black flex justify-center items-center">
-    <div class="">
-      <div class="flex justify-center">
+    <div class="row">
+      <div v-show="!activeMap" class="flex justify-center">
         <img src="@/assets/images/giphy.gif" class="object-fill h-20 w-20" />
       </div>
-
-      <!-- <div class="h-[800px] bg-gray-300 mb-5">
-        <iframe
-          width="100%"
-          height="100%"
-          frameborder="0"
-          marginheight="0"
-          marginwidth="0"
-          title="map"
-          scrolling="no"
-          src="https://maps.google.com/maps?width=100%&height=600&hl=en&q=%C4%B0zmir+(My%20Business%20Name)&ie=UTF8&t=&z=14&iwloc=B&output=embed"
-          style=""
-        ></iframe>
-      </div> -->
-
-      <!-- <button @click="toggleSpeechRecognition">
-        {{ isRecognitionActive ? "Stop" : "Start" }}
-      </button> -->
-      <!-- <GoogleMap /> -->
-      <!-- <p class="text-center self-center">
-        {{ transcript }}
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Sit molestiae
-        sapiente nesciunt natus expedita, libero minima dolore porro commodi
-        doloremque tempora eaque esse? Harum, repellat. Vero ipsa exercitationem
-        voluptatibus consequatur? Lorem ipsum dolor sit, amet consectetur
-        adipisicing elit. Consequatur animi doloremque vero incidunt? Placeat
-        illo adipisci delectus esse mollitia beatae dicta nihil ipsum nostrum
-        nesciunt? Eligendi deleniti numquam exercitationem saepe?
-      </p> -->
 
       <div class="grid grid-cols-6 gap-4">
         <div></div>
         <div class="col-span-4 text-center self-center">
-          {{ transcript }}
-          <div class="">
-            <!-- <GoogleMap /> -->
+          <div class="mb-2 text-xl">{{ transcript }}</div>
+          <div v-show="activeMap" class="flex justify-center">
+            <div v-if="lat != null || long != null">
+              <GoogleMap :lat="lat" :long="long" />
+            </div>
+            <div v-else>
+              <GoogleMap />
+            </div>
           </div>
         </div>
 
@@ -63,6 +39,9 @@ export default {
       recognition: null,
       apiStore: useApiStore(),
       audio: null,
+      lat: null,
+      long: null,
+      activeMap: false,
     };
   },
   mounted() {
@@ -118,6 +97,10 @@ export default {
         let response = await this.apiStore.getIntent(text);
         console.log(response["intent"]);
         // console.log(response["entities"]["data:data"][0]["value"]);
+        this.lat = null;
+        this.long = null;
+        this.activeMap = false;
+
         if (response["intent"]) {
           let intent = response["intent"];
           switch (intent) {
@@ -163,6 +146,25 @@ export default {
                 transcriptVoiceURLRestaurantNearMe["url"]
               );
               break;
+
+            case "showMap":
+              let place = response["entities"]["location:location"][0]["value"];
+
+              let responseDataMap = await this.apiStore.showMap(place);
+
+              if (responseDataMap["lat"] || responseDataMap["long"]) {
+                this.transcript = responseDataMap["description"];
+                this.lat = responseDataMap["lat"];
+                this.long = responseDataMap["long"];
+                this.activeMap = true;
+                let transcriptVoiceURLMap = await this.getVoiceTranscript(
+                  responseDataMap["description"]
+                );
+                console.log(transcriptVoiceURLMap);
+                await this.downloadAndPlay(transcriptVoiceURLMap["url"]);
+              }
+              break;
+
             default:
               console.err("No intent found!");
           }
