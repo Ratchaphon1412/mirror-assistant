@@ -1,7 +1,7 @@
 <template>
   <div class="h-screen text-gray-100 bg-black flex justify-center items-center">
     <div class="">
-      <div class="flex justify-center bg-black">
+      <div class="flex justify-center">
         <img src="@/assets/images/giphy.gif" class="object-fill h-20 w-20" />
       </div>
 
@@ -36,7 +36,7 @@
 
       <div class="grid grid-cols-6 gap-4">
         <div></div>
-        <div class="col-span-4 text-center self-center wi">
+        <div class="col-span-4 text-center self-center">
           {{ transcript }}
           <div class="row">
             <GoogleMap />
