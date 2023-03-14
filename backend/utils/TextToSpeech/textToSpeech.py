@@ -12,7 +12,8 @@ class textTTS:
 
     def changetextTV(self, text):
         endpoint = "https://play.ht/api/v1/"
-
+        print(self.playhtHeader['Authorization'])
+        print(self.playhtHeader['X-User-ID'])
         headers = {
             'Authorization': self.playhtHeader['Authorization'],
             'X-User-ID': self.playhtHeader['X-User-ID'],
@@ -35,8 +36,12 @@ class textTTS:
                 endpoint + 'articleStatus?transcriptionId=' + dic_response['transcriptionId'], headers=headers)
             print(responseVoice.text)
             dic_responseVoice = json.loads(responseVoice.text)
-            print(dic_responseVoice['audioUrl'])
-            return dic_responseVoice['audioUrl']
+            print(dic_responseVoice)
+            # print(dic_responseVoice['audioUrl'])
+            if(dic_responseVoice.get('audioUrl') !=None):
+                return dic_responseVoice['audioUrl']
+            else:
+                return None
             # downloadMP3 = requests.get(dic_responseVoice['audioUrl'])
             # open('./Sound/Voice.mp3', 'wb').write(downloadMP3.content)
             # playsound('./Sound/Voice.mp3')

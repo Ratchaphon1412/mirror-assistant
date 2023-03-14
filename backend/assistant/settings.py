@@ -120,6 +120,7 @@ GOOGLE_API = env('googleAPI')
 GOOGLE_MAP_API = env('googleMapAPI')
 PLAY_HT_API_AUTHORIZATION = env('playhtAPIAuthorization')
 PLAY_API_UserID = env('PLAY_API_UserID')
+CHAT_GPT_OPENAI_KEY=env('CHAT_GPT_OPENAI_KEY')
 
 
 

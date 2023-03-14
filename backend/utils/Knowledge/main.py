@@ -64,7 +64,7 @@ class Knowlegde(Geolocation, Nlg, Weather, KnowledgeGoogle):
                 pass
         return text
 
-    def findsomething(self, entities):
+    def findsomething(self,listChat):
         data = None
         # for key in list(entities):
         #     if key == "data:data":
@@ -74,9 +74,10 @@ class Knowlegde(Geolocation, Nlg, Weather, KnowledgeGoogle):
         #                 max = listData["confidence"]
         #                 data = listData["value"]
         # listText = self.findknowledgeGoogle(data)
-        listText = self.findknowledgeGoogle(entities)
+        # listText = self.findknowledgeGoogle(entities)
 
-        text = self.ansQuestion(listText)
+        # text = self.ansQuestion(listText)
+        text = self.ChatGPT_conversation(listChat)
 
         return text
 
@@ -90,3 +91,8 @@ class Knowlegde(Geolocation, Nlg, Weather, KnowledgeGoogle):
             text = self.ansRestaurant(list_restaurant)
 
             return text
+
+    def showMapGoogle(self,place):
+        lat,long,description=self.getPlaceGeolocation(place)
+        text = self.ansShowMap(lat,long,place,description)
+        return lat,long,text

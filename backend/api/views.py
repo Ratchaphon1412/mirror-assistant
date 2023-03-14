@@ -47,7 +47,12 @@ class KnowledgeAPI(APIView):
     def post(self, request):
         if request.body.decode('utf-8'):
             requestJson = json.loads(request.body.decode('utf-8'))
-            text = knowledge.findsomething(requestJson.get('question'))
+            conversation = []
+            conversation.append({'role': 'user', 'content':requestJson.get('question')})
+            
+            conversation = knowledge.findsomething(conversation)
+            text = '{0}'.format(conversation[-1]['content'].strip())
+            print(conversation)
             return Response({'answer': text})
 
         return Response({'answer': None})
@@ -106,3 +111,16 @@ class GeolocationIOT(APIView):
         locations = Location.objects.all()
         # serializer = LocationSerializer(locations, many=True)
         return Response({"locations": locations })
+    
+    
+class showGoogleMap(APIView):
+    def post(self,request):
+        if request.body.decode('utf-8'):
+            requestJson = json.loads(request.body.decode('utf-8'))
+            if requestJson.get('place'):
+                place = requestJson.get('place')
+                lat,long,description =knowledge.showMapGoogle(place)
+                
+                return Response({'lat': lat,'long':long ,'description':description})
+            else:
+                return Response({'lat': None,'long':None})

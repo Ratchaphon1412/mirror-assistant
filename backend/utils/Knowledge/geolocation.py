@@ -26,11 +26,13 @@ class Geolocation:
         param = {"address": text, "language": "th"}
         response = requests.get(enpoint, headers=headers, params=param)
         dicresponse = json.loads(response.text)
-
+        print(dicresponse)
         if dicresponse["status"] == "OK":
             lat = dicresponse["results"][0]["geometry"]["location"]["lat"]
             long = dicresponse["results"][0]["geometry"]["location"]["lat"]
+            description = dicresponse["results"][0]["formatted_address"]
+            
             # name = dicresponse["results"][0]["formatted_address"]
-            return lat, long
+            return lat, long,description
         else:
-            return
+            return None,None,None

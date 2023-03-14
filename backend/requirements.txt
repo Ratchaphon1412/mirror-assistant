@@ -6,3 +6,4 @@ djoser
 django-environ
 geopy
 geocoder
+openai
