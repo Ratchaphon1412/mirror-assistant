@@ -7,4 +7,5 @@ urlpatterns = [
     path('texttospeech/', TextToSpeech.as_view()),
     path('weather/', WeatherAPI.as_view()),
     path('restaurant/', GoogleMapAPI.as_view()),
+    path('place/',showGoogleMap.as_view()),
 ]

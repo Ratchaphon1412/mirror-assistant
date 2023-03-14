@@ -91,3 +91,8 @@ class Knowlegde(Geolocation, Nlg, Weather, KnowledgeGoogle):
             text = self.ansRestaurant(list_restaurant)
 
             return text
+
+    def showMapGoogle(self,place):
+        lat,long,description=self.getPlaceGeolocation(place)
+        text = self.ansShowMap(lat,long,place,description)
+        return lat,long,text

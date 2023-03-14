@@ -62,3 +62,10 @@ class Nlg:
         text += "ต้องการไปร้านไหนไหมครับ"
 
         return text
+    
+    def ansShowMap(self,lat,long,place,text):
+        start=['นี่คือภาพ แผนที่ ','นี่คือแผนที่ ','นี่คือแมป ']
+        
+        text = start[random.randrange(0, 3)] + place + " ที่อยู่คือ " + text + " ละติจูด " + str(lat) + " ลองติจูด " + str(long) + " ครับ"
+        
+        return text

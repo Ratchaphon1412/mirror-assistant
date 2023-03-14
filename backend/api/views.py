@@ -111,3 +111,16 @@ class GeolocationIOT(APIView):
         locations = Location.objects.all()
         # serializer = LocationSerializer(locations, many=True)
         return Response({"locations": locations })
+    
+    
+class showGoogleMap(APIView):
+    def post(self,request):
+        if request.body.decode('utf-8'):
+            requestJson = json.loads(request.body.decode('utf-8'))
+            if requestJson.get('place'):
+                place = requestJson.get('place')
+                lat,long,description =knowledge.showMapGoogle(place)
+                
+                return Response({'lat': lat,'long':long ,'description':description})
+            else:
+                return Response({'lat': None,'long':None})
