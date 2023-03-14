@@ -47,7 +47,12 @@ class KnowledgeAPI(APIView):
     def post(self, request):
         if request.body.decode('utf-8'):
             requestJson = json.loads(request.body.decode('utf-8'))
-            text = knowledge.findsomething(requestJson.get('question'))
+            conversation = []
+            conversation.append({'role': 'user', 'content':requestJson.get('question')})
+            
+            conversation = knowledge.findsomething(conversation)
+            text = '{0}'.format(conversation[-1]['content'].strip())
+            print(conversation)
             return Response({'answer': text})
 
         return Response({'answer': None})
