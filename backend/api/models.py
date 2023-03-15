@@ -4,3 +4,11 @@ from django.db import models
 class Location(models.Model):
     latitude = models.FloatField()
     longitude = models.FloatField()
+    
+
+class DHT22(models.Model):
+   
+    temperature = models.FloatField()
+    humidity = models.FloatField()
+
+

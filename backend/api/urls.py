@@ -8,4 +8,5 @@ urlpatterns = [
     path('weather/', WeatherAPI.as_view()),
     path('restaurant/', GoogleMapAPI.as_view()),
     path('place/',showGoogleMap.as_view()),
+    path('dhtIOT/',DHTSensorIOT.as_view()),
 ]
