@@ -96,3 +96,8 @@ class Knowlegde(Geolocation, Nlg, Weather, KnowledgeGoogle):
         lat,long,description=self.getPlaceGeolocation(place)
         text = self.ansShowMap(lat,long,place,description)
         return lat,long,text
+    
+    def getDHTSensor(self,temp,hum):
+        text = self.ansDHTSensor(temp,hum)
+        return text
+        

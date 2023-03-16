@@ -179,16 +179,16 @@ void untraSonicSensor(){
   distanceInch = distanceCm * CM_TO_INCH;
   
   // Prints the distance on the Serial Monitor
-  Serial.print("Distance (cm): ");
-  Serial.println(distanceCm);
-  Serial.print("Distance (inch): ");
-  Serial.println(distanceInch);
+  // Serial.print("Distance (cm): ");
+  // Serial.println(distanceCm);
+  // Serial.print("Distance (inch): ");
+  // Serial.println(distanceInch);
   
   // delay(1000);
 }
 
 void gpsSensor(){
-  Serial.println(SerialGPS.available());
+  
   while (SerialGPS.available() > 0)
     Serial.println("GPS Available");
     if (gps.encode(SerialGPS.read()))
