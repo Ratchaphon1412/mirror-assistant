@@ -109,7 +109,10 @@ DATABASES = {
     }
 }
 
-CORS_ALLOWED_ORIGINS = ['http://localhost:5173','http://127.0.0.1:8080'] # for cross origin resource sharing
+# CORS_ALLOWED_ORIGINS = ['*',] # for cross origin resource sharing
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    '.*',
+]
 # 'http://localhost:5173','http://127.0.0.1:8080'
 #  rest_framework settings
 REST_FRAMEWORK = {

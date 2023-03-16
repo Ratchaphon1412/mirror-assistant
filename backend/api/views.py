@@ -137,6 +137,7 @@ class DHTSensorIOT(APIView):
     def post(self,request):
         if request.body.decode('utf-8'):
             requestJson = json.loads(request.body.decode('utf-8'))
+            print(requestJson)
             if requestJson.get('temp') & requestJson.get('hum'):
                 print(DHT22.objects.all())
                 try:
