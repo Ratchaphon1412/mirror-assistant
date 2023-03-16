@@ -138,25 +138,24 @@ class DHTSensorIOT(APIView):
         if request.body.decode('utf-8'):
             requestJson = json.loads(request.body.decode('utf-8'))
             print(requestJson)
-            if requestJson.get('temp') & requestJson.get('hum'):
-                print(DHT22.objects.all())
-                try:
-                    dht = DHT22.objects.get(id=1)
-                    print(dht.temperature)
-                    print(dht.humidity)
-                     
-                    dht.temperature = requestJson.get('temp')
-                    dht.humidity = requestJson.get('hum')
-                    print(dht.temperature)
-                    print(dht.humidity)
-                     
-                except DHT22.DoesNotExist:
-                    dht = DHT22(id=1,temperature=requestJson.get('temp'),humidity=requestJson.get('hum'))
-                
-                dht.save()
-                return Response({'success': True})
-            else:
-                return Response({'success': False})
+          
+            print(DHT22.objects.all())
+            try:
+                dht = DHT22.objects.get(id=1)
+                print(dht.temperature)
+                print(dht.humidity)
+                    
+                dht.temperature = requestJson.get('temp')
+                dht.humidity = requestJson.get('hum')
+                print(dht.temperature)
+                print(dht.humidity)
+                    
+            except DHT22.DoesNotExist:
+                dht = DHT22(id=1,temperature=requestJson.get('temp'),humidity=requestJson.get('hum'))
+            
+            dht.save()
+            return Response({'success': True})
+           
             
             
 class SecurityIOT(APIView):

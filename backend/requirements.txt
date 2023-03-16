@@ -10,3 +10,4 @@ openai
 channels
 djangochannelsrestframework
 daphne
+channels_redis

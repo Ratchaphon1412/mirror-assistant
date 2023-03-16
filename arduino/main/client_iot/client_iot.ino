@@ -62,7 +62,7 @@ bool sendLineCheck = false;
 //send request define
 #include <HTTPClient.h>
 
-String serverName = "https://6052-2405-9800-b840-6ad-8587-3591-855b-a6d0.ap.ngrok.io";
+String serverName = "http://159.65.132.47:8000";
 unsigned long lastTime = 0;
 unsigned long timerDelay = 60000;
 
