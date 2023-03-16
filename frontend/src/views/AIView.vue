@@ -165,6 +165,17 @@ export default {
                 await this.downloadAndPlay(transcriptVoiceURLMap["url"]);
               }
               break;
+            case "IOT":
+              // let dataIOT = response["entities"]["data:data"][0]["value"];
+              let responseDataIOT = await this.apiStore.getIOT();
+              console.log(responseDataIOT);
+              this.transcript = responseDataIOT["ans"];
+              let transcriptVoiceURLIOT = await this.getVoiceTranscript(
+                responseDataIOT["ans"]
+              );
+              console.log(transcriptVoiceURLIOT);
+              await this.downloadAndPlay(transcriptVoiceURLIOT["url"]);
+              break;
 
             default:
               console.err("No intent found!");
