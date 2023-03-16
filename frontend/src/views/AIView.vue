@@ -90,9 +90,10 @@ export default {
       this.recognition.start();
     },
     async doSomething(finalTranscript) {
-      if (finalTranscript.startsWith("บอส")) {
+      if (finalTranscript.includes("บอส")) {
+        const [, text] = finalTranscript.split("บอส");
         this.transcript = finalTranscript;
-        let text = finalTranscript.replace("บอส", "");
+        // let text = finalTranscript.replace("บอส", "");
         console.log(text);
         let response = await this.apiStore.getIntent(text);
         console.log(response["intent"]);

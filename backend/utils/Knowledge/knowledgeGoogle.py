@@ -62,6 +62,7 @@ class KnowledgeGoogle:
         model_id = 'gpt-3.5-turbo'
      
         response = openai.ChatCompletion.create(
+            
             model=model_id,
             messages=conversation
         )

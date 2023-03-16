@@ -11,9 +11,13 @@ from utils.Knowledge.main import Knowlegde
 from utils.TextToSpeech.textToSpeech import textTTS
 import json
 
+
+from channels.layers import get_channel_layer
+from asgiref.sync import async_to_sync
+
 from .serializers import *
 
-from .models import   Location
+from .models import   Location ,DHT22
 
 # Create your views here.
 
@@ -124,3 +128,66 @@ class showGoogleMap(APIView):
                 return Response({'lat': lat,'long':long ,'description':description})
             else:
                 return Response({'lat': None,'long':None})
+            
+class DHTSensorIOT(APIView):
+    def get(self,request):
+        
+        dht = DHT22.objects.get(id=1)
+        return Response({'temp': dht.temperature,'hum':dht.humidity})
+    def post(self,request):
+        if request.body.decode('utf-8'):
+            requestJson = json.loads(request.body.decode('utf-8'))
+            print(requestJson)
+            if requestJson.get('temp') & requestJson.get('hum'):
+                print(DHT22.objects.all())
+                try:
+                    dht = DHT22.objects.get(id=1)
+                    print(dht.temperature)
+                    print(dht.humidity)
+                     
+                    dht.temperature = requestJson.get('temp')
+                    dht.humidity = requestJson.get('hum')
+                    print(dht.temperature)
+                    print(dht.humidity)
+                     
+                except DHT22.DoesNotExist:
+                    dht = DHT22(id=1,temperature=requestJson.get('temp'),humidity=requestJson.get('hum'))
+                
+                dht.save()
+                return Response({'success': True})
+            else:
+                return Response({'success': False})
+            
+            
+class SecurityIOT(APIView):
+    def post(self,request):
+        if request.body.decode('utf-8'):
+            requestJson = json.loads(request.body.decode('utf-8'))
+            if requestJson['security']:
+                check = requestJson['security']
+                if check == 'on':
+                    channel_layer = get_channel_layer()
+                    
+                    async_to_sync(channel_layer.group_send)(
+                        "IOT",
+                        {
+                            'type':'send_data',
+                            'message':True
+                        }
+                    )
+                    return Response({'success': True})
+                else:
+                    channel_layer = get_channel_layer()
+                    
+                    async_to_sync(channel_layer.group_send)(
+                        "IOT",
+                        {
+                            'type':'send_data',
+                            'message':False
+                        }
+                    )
+                    return Response({'success': True})
+                    
+                    
+                    
+                

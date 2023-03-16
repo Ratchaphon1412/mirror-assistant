@@ -48,7 +48,7 @@ class Knowlegde(Geolocation, Nlg, Weather, KnowledgeGoogle):
             #                 time = listintime["value"]
             # if location != None
             if entities != None:
-                lat, long = self.getPlaceGeolocation(entities)
+                lat, long ,describtion = self.getPlaceGeolocation(entities)
                 des, temp = self.weatherCurrent(lat, long)
                 text = self.answerPlaceWeather(des, temp, entities)
             else:

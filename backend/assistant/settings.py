@@ -34,12 +34,13 @@ SECRET_KEY = env('SECRET_KEY_DJANGO')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'daphne',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -50,9 +51,12 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'djoser',# for authentication
     'corsheaders',# for cross origin resource sharing
-    'api'
+    'api',
+    'channels', # for websocket
     
 ]
+
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -83,8 +87,17 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'assistant.wsgi.application'
+# WSGI_APPLICATION = 'assistant.wsgi.application'
+ASGI_APPLICATION = 'assistant.asgi.application' # for websocket
+WSGI_APPLICATION = 'assistant.wsgi.application' # for websocket
 
+
+# channels settings websocket 
+CHANNEL_LAYERS = {
+    'default': {
+        'BACKEND': 'channels.layers.InMemoryChannelLayer'
+    }
+}
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
@@ -96,8 +109,11 @@ DATABASES = {
     }
 }
 
-CORS_ALLOWED_ORIGINS = [ 'http://localhost:5173','http://127.0.0.1:8080'] # for cross origin resource sharing
-
+# CORS_ALLOWED_ORIGINS = ['*',] # for cross origin resource sharing
+CORS_ALLOWED_ORIGIN_REGEXES = [
+    '.*',
+]
+# 'http://localhost:5173','http://127.0.0.1:8080'
 #  rest_framework settings
 REST_FRAMEWORK = {
     # Use Django's standard `django.contrib.auth` permissions,
