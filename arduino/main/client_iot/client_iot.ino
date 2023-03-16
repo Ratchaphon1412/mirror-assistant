@@ -1,3 +1,10 @@
+// WiFi Define
+#include <WiFi.h>
+#include <HTTPClient.h>
+// const char* ssid = "aisfibre_2.4G_368A9E";
+// const char* password = "$voot111";
+const char* ssid = "Nueng";
+const char* password = "yfwu8483";
 
 // DHT Define
 #include "DHT.h"
@@ -38,16 +45,47 @@ const int echoPin = 5;
 long duration;
 float distanceCm;
 float distanceInch;
-bool alert = false;
+
 
 
 //buzzer
 int buzzer = 16;
+bool alert = false;
+bool sendLineCheck = false;
+
+//Line notification
+#include <TridentTD_LineNotify.h>
+#define LINE_TOKEN  "qzarRIBq0MzEmCmJZVa7MAfgXIYYtQUA6YIRQ0Uav0L"
+#define MESSAGE "มีคนบุกรุก"
+
+
+//send request define
+#include <HTTPClient.h>
+
+String serverName = "https://6052-2405-9800-b840-6ad-8587-3591-855b-a6d0.ap.ngrok.io";
+unsigned long lastTime = 0;
+unsigned long timerDelay = 60000;
+
 
 
 void setup() {
 
   Serial.begin(115200);
+  //setup Wifi
+    WiFi.begin(ssid, password);
+  Serial.println("Connecting");
+  while(WiFi.status() != WL_CONNECTED) {
+    delay(3000);
+    Serial.print(".");
+  }
+  Serial.println("");
+  Serial.print("Connected to WiFi network with IP Address: ");
+  Serial.println(WiFi.localIP());
+
+  Serial.println("Timer set to 5 seconds (timerDelay variable), it will take 5 seconds before publishing the first reading.");
+
+
+
   //setup untrasonic
   pinMode(trigPin, OUTPUT); // Sets the trigPin as an Output
   pinMode(echoPin, INPUT); // Sets the echoPin as an Input
@@ -61,6 +99,8 @@ void setup() {
   SerialGPS.begin(9600);
   //setup buzzer
   pinMode(buzzer, OUTPUT);
+  //setup Line
+   LINE.setToken(LINE_TOKEN);
   
 }
 
@@ -70,25 +110,36 @@ void loop() {
   untraSonicSensor();
   gpsSensor();
   //check security
+
+if(true){
   if(distanceCm < 10){
       alert = true;
-  }else{
-    alert = false;
   }
+
+}
  //
   if(alert == true){
+   
+      Serial.println("alert");
     digitalWrite(buzzer, HIGH);
-    Serial.println("alert");
-    delay(2000);
+    delay(500);
+    digitalWrite(buzzer, LOW);
+    delay(500);
+    digitalWrite(buzzer, HIGH);
+    delay(500);
+    digitalWrite(buzzer, LOW);
+    delay(500);
+  
+    if(!sendLineCheck){
+      sendLine();
+      sendLineCheck = true;
+    }
   }else{
     digitalWrite(buzzer, LOW);
-    delay(2000);
-  }
-  // digitalWrite(buzzer, LOW);
-  delay(1000);
-  // digitalWrite(buzzer, HIGH);
-  
 
+  }
+  sendDataToServer();
+  delay(2000);
 }
 
 void dhtSensor(){
@@ -105,8 +156,8 @@ void printlcd(String value1, String value2){
   lcd.print(value1);
   lcd.setCursor(0, 1);
   lcd.print(value2);
-  delay(3000);
-  lcd.clear();
+  // delay(1000);
+  // lcd.clear();
 }
 
 void untraSonicSensor(){
@@ -133,7 +184,7 @@ void untraSonicSensor(){
   Serial.print("Distance (inch): ");
   Serial.println(distanceInch);
   
-  delay(1000);
+  // delay(1000);
 }
 
 void gpsSensor(){
@@ -200,5 +251,97 @@ void gpsSensor(){
     }
 }
 
+void sendLine(){
+  LINE.notify(MESSAGE);
+}
 
 
+void sendDataToServer(){
+     if ((millis() - lastTime) > timerDelay) {
+    //Check WiFi connection status
+    if(WiFi.status()== WL_CONNECTED){
+      WiFiClient client;
+      HTTPClient http;
+      // DynamicJsonDocument doc(1024);
+      String endPoint = serverName + "/api/v1/dhtIOT/";
+      Serial.println(endPoint);
+      // Your Domain name with URL path or IP address with path
+      http.begin(client, endPoint);
+      http.setTimeout(10000);
+      // If you need Node-RED/server authentication, insert user and password below
+      //http.setAuthorization("REPLACE_WITH_SERVER_USERNAME", "REPLACE_WITH_SERVER_PASSWORD");
+      
+      // Specify content-type header
+      http.addHeader("Content-Type", "application/json");
+      // Authorization token linebot
+      // http.addHeader("Authorization","Bearer qzarRIBq0MzEmCmJZVa7MAfgXIYYtQUA6YIRQ0Uav0L");
+    
+      // Data to send with HTTP POST
+
+  
+      String httpRequestData = "{\"temp\":" +String(celsius)+",\"hum\":"+String(humidity)+"}";
+      Serial.println(httpRequestData);
+      // deserializeJson(doc, httpRequestData);
+      // JsonObject obj = doc.as<JsonObject>();
+
+      // Send HTTP POST request
+      int httpResponseCode = http.POST(httpRequestData);
+      
+      // If you need an HTTP request with a content type: application/json, use the following:
+      //http.addHeader("Content-Type", "application/json");
+      //int httpResponseCode = http.POST("{\"api_key\":\"tPmAT5Ab3j7F9\",\"sensor\":\"BME280\",\"value1\":\"24.25\",\"value2\":\"49.54\",\"value3\":\"1005.14\"}");
+
+      // If you need an HTTP request with a content type: text/plain
+      //http.addHeader("Content-Type", "text/plain");
+      //int httpResponseCode = http.POST("Hello, World!");
+     
+      Serial.print("HTTP Response code: ");
+      Serial.println(httpResponseCode);
+      String response = http.getString();
+      Serial.println(response);
+      // Free resources
+      http.end();
+    }
+    else {
+      Serial.println("WiFi Disconnected");
+    }
+    lastTime = millis();
+  }
+
+
+
+
+
+
+
+//  if (WiFi.status() == WL_CONNECTED) {
+//     unsigned long currentTime = millis(); // Get current time
+//     Serial.println("send dht to server");
+//     if (currentTime - lastRequestTime >= 5000) { // Check if one minute has passed
+//       HTTPClient http;
+//       WiFiClient client;
+//       String endPoint = serverName + "/api/v1/dhtIOT/";
+//       http.begin(client,endPoint);
+//       http.addHeader("Content-Type", "application/json");
+
+//       String payload ="{\"temp\":\"" +String(celsius)+"\",\"hum\":\""+String(humidity)+"\"}" ; // Replace with your JSON payload
+
+//       int httpResponseCode = http.POST(payload);
+
+//       if (httpResponseCode > 0) {
+//         Serial.print("HTTP Response code: ");
+//         Serial.println(httpResponseCode);
+//         String response = http.getString();
+//         Serial.println(response);
+//       } else {
+//         Serial.print("Error code: ");
+//         Serial.println(httpResponseCode);
+//       }
+
+//       http.end();
+//       lastRequestTime = currentTime; // Update last request time
+//     }
+//   }
+
+  
+}
