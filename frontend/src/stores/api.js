@@ -96,6 +96,10 @@ export const useApiStore = defineStore('api', {
 
             return response.data;
         
+    },
+    async getIOT(){
+        const response = await axios.get('/api/v1/dhtIOT/');
+        return response.data;
     }
 
 }})
