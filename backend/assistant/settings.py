@@ -91,6 +91,8 @@ TEMPLATES = [
 ASGI_APPLICATION = 'assistant.asgi.application' # for websocket
 WSGI_APPLICATION = 'assistant.wsgi.application' # for websocket
 
+
+# channels settings websocket 
 CHANNEL_LAYERS = {
     'default': {
         'BACKEND': 'channels.layers.InMemoryChannelLayer'

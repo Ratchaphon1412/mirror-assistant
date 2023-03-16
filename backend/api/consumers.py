@@ -35,7 +35,7 @@ class SecurityConsumer(WebsocketConsumer):
         message = event['message']
         self.send(text_data=json.dumps({
             'type':'send_data',
-            'message':message +"why"
+            'message':message
         }
         ))
         

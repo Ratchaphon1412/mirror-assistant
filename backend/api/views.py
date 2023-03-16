@@ -11,6 +11,10 @@ from utils.Knowledge.main import Knowlegde
 from utils.TextToSpeech.textToSpeech import textTTS
 import json
 
+
+from channels.layers import get_channel_layer
+from asgiref.sync import async_to_sync
+
 from .serializers import *
 
 from .models import   Location ,DHT22
@@ -152,3 +156,37 @@ class DHTSensorIOT(APIView):
                 return Response({'success': True})
             else:
                 return Response({'success': False})
+            
+            
+class SecurityIOT(APIView):
+    def post(self,request):
+        if request.body.decode('utf-8'):
+            requestJson = json.loads(request.body.decode('utf-8'))
+            if requestJson['security']:
+                check = requestJson['security']
+                if check == 'on':
+                    channel_layer = get_channel_layer()
+                    
+                    async_to_sync(channel_layer.group_send)(
+                        "IOT",
+                        {
+                            'type':'send_data',
+                            'message':True
+                        }
+                    )
+                    return Response({'success': True})
+                else:
+                    channel_layer = get_channel_layer()
+                    
+                    async_to_sync(channel_layer.group_send)(
+                        "IOT",
+                        {
+                            'type':'send_data',
+                            'message':False
+                        }
+                    )
+                    return Response({'success': True})
+                    
+                    
+                    
+                
