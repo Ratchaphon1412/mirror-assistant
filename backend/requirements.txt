@@ -7,3 +7,6 @@ django-environ
 geopy
 geocoder
 openai
+channels
+djangochannelsrestframework
+daphne
