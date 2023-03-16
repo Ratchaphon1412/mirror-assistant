@@ -69,3 +69,9 @@ class Nlg:
         text = start[random.randrange(0, 3)] + place + " ที่อยู่คือ " + text + " ละติจูด " + str(lat) + " ลองติจูด " + str(long) + " ครับ"
         
         return text
+    
+    def ansDHTSensor(self,temperature,humidity):
+        start=['อุณหภูมิปัจจุบัน ','อุณหภูมิ ','อุณหภูมิตอนนี้ ']
+        text = "จาก เซนเซอร์" + start[random.randrange(0, 3)] + str(temperature) + " องศาเซลเซียส ความชื้นปัจจุบัน " + str(humidity) 
+        return text
+        

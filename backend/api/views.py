@@ -133,7 +133,8 @@ class DHTSensorIOT(APIView):
     def get(self,request):
         
         dht = DHT22.objects.get(id=1)
-        return Response({'temp': dht.temperature,'hum':dht.humidity})
+        text = knowledge.getDHTSensor(dht.temperature,dht.humidity)
+        return Response({'ans':text})
     def post(self,request):
         if request.body.decode('utf-8'):
             requestJson = json.loads(request.body.decode('utf-8'))
