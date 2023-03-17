@@ -31,6 +31,11 @@
 import NavbarFooter from "@/layouts/NavbarFooter.vue";
 import { useApiStore } from "@/stores/api";
 import GoogleMap from "@/components/GoogleMap.vue";
+import processMP3 from "@/assets/music/process.mp3";
+import off_security from "@/assets/music/off_security.mp3";
+import on_security from "@/assets/music/on_security.mp3";
+import problem_sound from "@/assets/music/problem_sound.mp3";
+import problem_chatGPT from "@/assets/music/problem_chatGPT.mp3";
 export default {
   setup() {},
   data() {
@@ -107,19 +112,25 @@ export default {
           switch (intent) {
             case "search":
               // let data = response["entities"]["data:data"][0]["value"];
-              let responseData = await this.apiStore.getKnowledge(text);
-              console.log(responseData);
-              this.transcript = responseData["answer"];
-              let transcriptVoiceURL = await this.getVoiceTranscript(
-                responseData["answer"]
-              );
-              console.log(transcriptVoiceURL);
-              await this.downloadAndPlay(transcriptVoiceURL["url"]);
+              this.playSoundLocal(processMP3);
+              try {
+                let responseData = await this.apiStore.getKnowledge(text);
+                console.log(responseData);
+                this.transcript = responseData["answer"];
+                let transcriptVoiceURL = await this.getVoiceTranscript(
+                  responseData["answer"]
+                );
+                console.log(transcriptVoiceURL);
+                await this.downloadAndPlay(transcriptVoiceURL["url"]);
+              } catch (e) {
+                await this.playSoundLocal(problem_chatGPT);
+              }
 
               break;
             case "weather":
               let dataWeather =
                 response["entities"]["location:location"][0]["value"];
+              this.playSoundLocal(processMP3);
               let responseDataWeather = await this.apiStore.getWeather(
                 dataWeather
               );
@@ -134,6 +145,7 @@ export default {
             case "restaurantNearMe":
               let lat = "13.91060";
               let long = "100.67590";
+              this.playSoundLocal(processMP3);
               let responseDataRestaurantNearMe =
                 await this.apiStore.getRestaurantNearMe(lat, long);
               console.log(responseDataRestaurantNearMe);
@@ -150,7 +162,7 @@ export default {
 
             case "showMap":
               let place = response["entities"]["location:location"][0]["value"];
-
+              this.playSoundLocal(processMP3);
               let responseDataMap = await this.apiStore.showMap(place);
 
               if (responseDataMap["lat"] || responseDataMap["long"]) {
@@ -176,7 +188,20 @@ export default {
               console.log(transcriptVoiceURLIOT);
               await this.downloadAndPlay(transcriptVoiceURLIOT["url"]);
               break;
-
+            case "on_security":
+              let responseDataSecurityOn = await this.apiStore.onSecurity();
+              console.log(responseDataSecurityOn);
+              this.transcript = "เปิดระบบความปลอดภัยเรียบร้อยแล้วครับ";
+              this.playSoundLocal(on_security);
+              this.transcript = "";
+              break;
+            case "off_security":
+              let responseDataSecurityOff = await this.apiStore.offSecurity();
+              console.log(responseDataSecurityOff);
+              this.transcript = "ปิดระบบความปลอดภัยเรียบร้อยแล้วครับ";
+              this.playSoundLocal(off_security);
+              this.transcript = "";
+              break;
             default:
               console.err("No intent found!");
           }
@@ -193,31 +218,23 @@ export default {
     async downloadAndPlay(urlDonwoload) {
       const url = urlDonwoload;
       var audio = new Audio(url);
+
+      try {
+        await audio.play();
+
+        //   // When audio playback finishes, revoke the URL object
+        audio.addEventListener("ended", () => {
+          // URL.revokeObjectURL(blobUrl);
+          this.transcript = "";
+        });
+      } catch (error) {
+        console.error("Error downloading or playing file:", error);
+        this.playSoundLocal(problem_sound);
+      }
+    },
+    async playSoundLocal(path) {
+      const audio = new Audio(path);
       audio.play();
-      // try {
-      //   // Download file from URL
-      //   const response = await fetch(url);
-      //   const arrayBuffer = await response.arrayBuffer();
-
-      //   // Create blob object from file data
-      //   const blob = new Blob([arrayBuffer], { type: "audio/mpeg" });
-
-      //   // Create URL object from blob and set as audio source
-      //   const blobUrl = URL.createObjectURL(blob);
-      //   const audio = new Audio(blobUrl);
-      //   audio.autoplay = true;
-      //   audio.muted = true;
-      //   // this.audio = audio;
-      //   await audio.play();
-
-      //   // When audio playback finishes, revoke the URL object
-      audio.addEventListener("ended", () => {
-        // URL.revokeObjectURL(blobUrl);
-        this.transcript = "";
-      });
-      // } catch (error) {
-      //   console.error("Error downloading or playing file:", error);
-      // }
     },
   },
 };

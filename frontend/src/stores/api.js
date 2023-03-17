@@ -100,6 +100,23 @@ export const useApiStore = defineStore('api', {
     async getIOT(){
         const response = await axios.get('/api/v1/dhtIOT/');
         return response.data;
+    },
+    async onSecurity(){
+        var data = JSON.stringify({
+            "security":"on"
+        });
+
+
+
+        const response = await axios.post('/api/v1/securityIOT/',data=data);
+        return response.data;
+    },
+    async offSecurity(){
+        var data = JSON.stringify({
+            "security":"off"
+        });
+        const response =await axios.post('/api/v1/securityIOT/',data=data)
+        return response.data;
     }
 
 }})
