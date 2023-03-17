@@ -35,7 +35,9 @@ SECRET_KEY = env('SECRET_KEY_DJANGO')
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-
+#configured to use HTTPS
+SECURE_SSL_REDIRECT= True
+SESSION_COOKIE_SECURE = True
 
 # Application definition
 
