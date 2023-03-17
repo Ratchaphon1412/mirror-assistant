@@ -112,7 +112,7 @@ export default {
           switch (intent) {
             case "search":
               // let data = response["entities"]["data:data"][0]["value"];
-              this.playSoundLocal(processMP3);
+              await this.playSoundLocal(processMP3);
               try {
                 let responseData = await this.apiStore.getKnowledge(text);
                 console.log(responseData);
@@ -234,7 +234,7 @@ export default {
     },
     async playSoundLocal(path) {
       const audio = new Audio(path);
-      audio.play();
+      await audio.play();
     },
   },
 };
