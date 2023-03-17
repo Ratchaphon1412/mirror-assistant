@@ -1,10 +1,10 @@
 // WiFi Define
 #include <WiFi.h>
 #include <HTTPClient.h>
-// const char* ssid = "aisfibre_2.4G_368A9E";
-// const char* password = "$voot111";
-const char* ssid = "Nueng";
-const char* password = "yfwu8483";
+const char* ssid = "aisfibre_2.4G_368A9E";
+const char* password = "$voot111";
+// const char* ssid = "Nueng";
+// const char* password = "yfwu8483";
 
 // DHT Define
 #include "DHT.h"
@@ -50,8 +50,7 @@ float distanceInch;
 
 //buzzer
 int buzzer = 16;
-bool alert = false;
-bool sendLineCheck = false;
+
 
 //Line notification
 #include <TridentTD_LineNotify.h>
@@ -61,11 +60,55 @@ bool sendLineCheck = false;
 
 //send request define
 #include <HTTPClient.h>
+WiFiClient client;
 
 String serverName = "http://159.65.132.47:8000";
 unsigned long lastTime = 0;
 unsigned long timerDelay = 60000;
+bool alert = false;
+bool sendLineCheck = false;
 
+//web socket
+#include <WebSocketsClient.h>
+#include <ArduinoJson.h>
+bool security = false;
+
+WebSocketsClient webSocket;
+void webSocketEvent(WStype_t type, uint8_t * payload, size_t length) {
+   DynamicJsonDocument json(1024);
+  switch(type) {
+    case WStype_CONNECTED:
+     {
+        Serial.println("WebSocket connected");
+      // Create a JSON object and send it to the server
+    
+      // json["message"] = "Hello from ESP32";
+      // String jsonString;
+      // serializeJson(json, jsonString);
+      // Serial.println(jsonString);
+      // webSocket.sendTXT(jsonString);
+     }
+      break;
+    case WStype_TEXT:
+      {
+        Serial.printf("Received message: %s\n", payload);
+      // Handle incoming JSON messages
+      
+       deserializeJson(json, payload);
+      String message = json["message"];
+      security = message.equals("true");
+        
+      Serial.printf("Received message: %s\n", message.c_str());
+      
+      }
+      break;
+    case WStype_DISCONNECTED:
+      {
+        Serial.println("WebSocket disconnected");
+      break;
+      }
+  }
+}
 
 
 void setup() {
@@ -101,6 +144,13 @@ void setup() {
   pinMode(buzzer, OUTPUT);
   //setup Line
    LINE.setToken(LINE_TOKEN);
+   //web socket
+   // Connect to WebSocket server
+   // Connect to the websocket server
+  webSocket.begin("159.65.132.47", 8000, "/ws/security/");
+  webSocket.onEvent(webSocketEvent);
+
+ 
   
 }
 
@@ -109,27 +159,24 @@ void loop() {
   printlcd(String(humidity) + " H",String(celsius) + " C");
   untraSonicSensor();
   gpsSensor();
+  webSocket.loop();
   //check security
 
-if(true){
+if(security){
   if(distanceCm < 10){
       alert = true;
   }
 
+}else{
+  alert =false;
+  sendLineCheck = false;
 }
  //
   if(alert == true){
    
-      Serial.println("alert");
+    Serial.println("alert");
     digitalWrite(buzzer, HIGH);
-    delay(500);
-    digitalWrite(buzzer, LOW);
-    delay(500);
-    digitalWrite(buzzer, HIGH);
-    delay(500);
-    digitalWrite(buzzer, LOW);
-    delay(500);
-  
+ 
     if(!sendLineCheck){
       sendLine();
       sendLineCheck = true;
@@ -139,15 +186,15 @@ if(true){
 
   }
   sendDataToServer();
-  delay(2000);
+
 }
 
 void dhtSensor(){
   humidity = dht.readHumidity();
   celsius = dht.readTemperature();
-  Serial.println("temperater");
-  Serial.println(humidity);
-  Serial.println(celsius);
+  // Serial.println("temperater");
+  // Serial.println(humidity);
+  // Serial.println(celsius);
 
 }
 
@@ -260,7 +307,7 @@ void sendDataToServer(){
      if ((millis() - lastTime) > timerDelay) {
     //Check WiFi connection status
     if(WiFi.status()== WL_CONNECTED){
-      WiFiClient client;
+  
       HTTPClient http;
       // DynamicJsonDocument doc(1024);
       String endPoint = serverName + "/api/v1/dhtIOT/";
@@ -307,41 +354,13 @@ void sendDataToServer(){
     }
     lastTime = millis();
   }
-
-
-
-
-
-
-
-//  if (WiFi.status() == WL_CONNECTED) {
-//     unsigned long currentTime = millis(); // Get current time
-//     Serial.println("send dht to server");
-//     if (currentTime - lastRequestTime >= 5000) { // Check if one minute has passed
-//       HTTPClient http;
-//       WiFiClient client;
-//       String endPoint = serverName + "/api/v1/dhtIOT/";
-//       http.begin(client,endPoint);
-//       http.addHeader("Content-Type", "application/json");
-
-//       String payload ="{\"temp\":\"" +String(celsius)+"\",\"hum\":\""+String(humidity)+"\"}" ; // Replace with your JSON payload
-
-//       int httpResponseCode = http.POST(payload);
-
-//       if (httpResponseCode > 0) {
-//         Serial.print("HTTP Response code: ");
-//         Serial.println(httpResponseCode);
-//         String response = http.getString();
-//         Serial.println(response);
-//       } else {
-//         Serial.print("Error code: ");
-//         Serial.println(httpResponseCode);
-//       }
-
-//       http.end();
-//       lastRequestTime = currentTime; // Update last request time
-//     }
-//   }
-
   
 }
+
+
+
+
+
+
+
+
