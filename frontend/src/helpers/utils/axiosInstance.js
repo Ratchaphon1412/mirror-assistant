@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { useAuthStore } from '@/stores/auth';
 
-const baseURL = 'http:// www.ratchaphon1412.co:8000/';
+const baseURL = 'https://ratchaphon1412.co/';
 
 const axiosInstance = axios.create({
   baseURL,
