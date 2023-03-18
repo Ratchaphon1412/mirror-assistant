@@ -35,9 +35,6 @@ SECRET_KEY = env('SECRET_KEY_DJANGO')
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
-#configured to use HTTPS
-SECURE_SSL_REDIRECT= True
-SESSION_COOKIE_SECURE = True
 
 # Application definition
 
@@ -112,6 +109,9 @@ DATABASES = {
 }
 
 # CORS_ALLOWED_ORIGINS = ['*',] # for cross origin resource sharing
+# CORS_ALLOWED_ORIGIN_REGEXES = [
+#     '.*',
+# ]
 CORS_ORIGIN_ALLOW_ALL = True
 # 'http://localhost:5173','http://127.0.0.1:8080'
 #  rest_framework settings
