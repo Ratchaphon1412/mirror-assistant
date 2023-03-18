@@ -17,13 +17,15 @@
         {
             "src": "/(.*)",
             "dest": "asgi.py"
-        },
+        }
+    ],
+    "rewrites": [
         {
-            "src": "/ws/security/",
-            "dest": "asgi.py",
-            "protocols": [
-                "websocket"
-            ]
+            "source": "/ws/(.*)",
+            "destination": "ws://localhost:8000/ws/$1",
+            "headers": {
+                "upgrade": "websocket"
+            }
         }
     ]
 }
