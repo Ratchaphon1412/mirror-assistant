@@ -62,7 +62,7 @@ int buzzer = 16;
 #include <HTTPClient.h>
 WiFiClient client;
 
-String serverName = "http://159.65.132.47:8000";
+String serverName = "http://www.ratchaphon1412.co";
 unsigned long lastTime = 0;
 unsigned long timerDelay = 60000;
 bool alert = false;
@@ -147,7 +147,7 @@ void setup() {
    //web socket
    // Connect to WebSocket server
    // Connect to the websocket server
-  webSocket.begin("159.65.132.47", 8000, "/ws/security/");
+  webSocket.begin("ratchaphon1412.co", 8000, "/ws/security/");
   webSocket.onEvent(webSocketEvent);
 
  
