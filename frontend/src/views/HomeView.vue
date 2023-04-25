@@ -2,8 +2,8 @@
   <NavbarFooter>
     <div class="mx-auto h-full">
       <AstroSpaceBackground />
-      <DetailFeature />
-      <About />
+      <!-- <DetailFeature />
+      <About /> -->
     </div>
   </NavbarFooter>
 </template>
