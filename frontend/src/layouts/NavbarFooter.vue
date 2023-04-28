@@ -1,5 +1,5 @@
 <template>
-  <section class="dark:bg-gray-900 bg-gray-100 mx-auto w-auto h-auto">
+  <section class="dark:bg-gray-900 bg-gray-100 h-screen">
     <Navbar />
     <div class="mx-auto w-full h-full">
       <slot />
