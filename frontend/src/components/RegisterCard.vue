@@ -21,7 +21,7 @@
           <h1
             class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white"
           >
-            Create and account
+            Create an account
           </h1>
           <form class="space-y-4 md:space-y-6" action="#">
             <div>
@@ -40,7 +40,7 @@
                 v-model="email"
               />
             </div>
-            <div>
+            <!-- <div>
               <label
                 for="username"
                 class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -55,7 +55,7 @@
                 required=""
                 v-model="username"
               />
-            </div>
+            </div> -->
             <div>
               <label
                 for="password"
@@ -88,30 +88,7 @@
                 v-model="confirmPassword"
               />
             </div>
-            <div class="flex items-start">
-              <div class="flex items-center h-5">
-                <input
-                  id="terms"
-                  aria-describedby="terms"
-                  type="checkbox"
-                  class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
-                  required=""
-                  v-model="terms"
-                />
-              </div>
-              <div class="ml-3 text-sm">
-                <label
-                  for="terms"
-                  class="font-light text-gray-500 dark:text-gray-300"
-                  >I accept the
-                  <a
-                    class="font-medium text-primary-600 hover:underline dark:text-primary-500"
-                    href="#"
-                    >Terms and Conditions</a
-                  ></label
-                >
-              </div>
-            </div>
+
             <button
               type="submit"
               class="w-full text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:outline-none focus:ring-b-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
@@ -135,13 +112,19 @@
 </template>
 
 <script>
-// import { useAuthStore } from "@/stores/auth.js";
+import { useAuthStore } from "@/stores/auth.js";
 
 export default {
-  setup() {},
+  setup() {
+    const authStore = useAuthStore();
+
+    return {
+      authStore,
+    };
+  },
   data() {
     return {
-      username: "",
+      // username: "",
       email: "",
       password: "",
       confirmPassword: "",
@@ -156,7 +139,16 @@ export default {
         alert("Passwords do not match");
         return;
       }
-      console.log(this.username, this.email, this.password);
+      try {
+        await this.authStore.register(
+          this.email,
+          this.password,
+          this.confirmPassword
+        );
+        this.$router.push("/login");
+      } catch (err) {
+        console.log(err);
+      }
     },
   },
 };

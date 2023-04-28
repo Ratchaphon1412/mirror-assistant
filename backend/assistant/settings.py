@@ -13,6 +13,9 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 from pathlib import Path 
 import environ # for environment variables 
 import os # for environment variables
+import firebase_admin
+
+from firebase_admin import credentials
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -53,8 +56,16 @@ INSTALLED_APPS = [
     'api',
     'channels', # for websocket
     
+    # django allauth
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.github',
+    'allauth.socialaccount.providers.facebook',
+    'allauth.socialaccount.providers.google',
+    
 ]
-
+SITE_ID = 1
 
 
 MIDDLEWARE = [
@@ -108,11 +119,27 @@ DATABASES = {
     }
 }
 
-# CORS_ALLOWED_ORIGINS = ['*',] # for cross origin resource sharing
-# CORS_ALLOWED_ORIGIN_REGEXES = [
-#     '.*',
-# ]
+
 CORS_ORIGIN_ALLOW_ALL = True
+# AUTH_USER_MODEL = 'users.CustomUser' # for user authentication
+cred = credentials.Certificate(
+    {
+        "type": "service_account",
+        "project_id": "iotservices-378810",
+        "private_key_id": "a16c4a5817950b37b32c8a262814074ca6514609",
+        "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCLu9Qzqw3bIleL\naiu8jSlwHwKLCEa6AvAL54OD0rfG2WVVe8Ci6CFjujBY6PtPAGct00Wc4OfkEEzq\naPnjy35Rv/B72wdph5qLNoBqHlE0m6O3OGSAkpovBFe7iXZW2/EleMMUTYLLwfgv\nt3k5mAU+VoaZQHafXI4x1JNmteFKn8rKIM8ayUPA4dMk0rX9gUml72N28mHOngtC\nyEAiBgGYCJeP/g8/vA751aQxtL+hBwrUx5Xf+xuXfJfzaYlbrYyebgsGBSgXY75f\n6LMh7ZqlBQpILlL2P4q53n5cFFiA5khbMjT9R8XcPs1s1YaIu1KNSQ0KaqOLOL58\nCLqSP8JlAgMBAAECggEACINZPoublL/vHviJMRvVjDXrcP6AVplSuBry/X9DQIti\nm9ZmClbDoACKLQSGuQ2we499VH00S4X9taNPJCRz7fWYaGdT+IcxMG2R3cU6k86u\npv05zEaCO76TPML3cXvFYY/NrMk7IIBRB1ExgsODAEUDvsb5YySfqiQGFfIbR3FF\nOhdAya3nVJs40Bw4KvBnJ7dJKHWze7mIb/GxGElI/1ILqIRA4gPxOx74RWn930/s\np1HTJSOU1m27cG4EHXPPkUWp3BCHZh5E6ujI31j9EO4yPrJfSW1szmWegfzWEerB\n2n6JphqJQz3Q89rhfnSKRR2evJ6VY/f0WnjUlcvyYQKBgQDDQeRU27GJItLf16Qc\nTIpfItn0dsREaB4rUctFbTXWlYCq+5ZkYBkXH6zfkogeD8bzSNcDUf6Xt1t9pcaj\nyQMwtWjsNKQ+6EIh0oc93hWp+BG7BYGcMsZEccKOFcszPQ9idxDe3IzQSlqHz9wV\nnv2+Ry8UTSw2JQsCQ8dn+WYFxQKBgQC3NBXCVVxdYDLsvYcQGo8zuaJmsqwz+VtN\nV1NPLkn8lT37xXGIIy2epX2uTP4YsRz1X4Iy3Q8ojq5kK7jB7SNgiY1b37tRK9GL\nSybWeQVS7D+UpBuWgorgH7iAHMfNrpqgoSbbdugbC0ZPJ9AMNoiWt16qY9Ax5Vzz\nw99Zcwk0IQKBgEIXQJk0j8BSaDxaOnNVuRSAsHOd68sXzvZsxjgmwi1zB01YwUwS\ndwurrhEzAR3jyzy38AdwrpNd/frmrPjtZkYLcYtaOioM5a2bHCnlzUFt9Vpvf7KG\nQTQTqX38hH5Acb+re6tjzcoHEOOdiOpMmajZYWcmxAtDuJk4pftcoJrdAoGAcJ0O\npwdLoIZKp2WVSVvaHOSGJHS+D7C+49rC9hAxIJcoo8PpltJw720wxVzEcK8matpL\nsTJbaAXUwvRxPJulPGkxQIFVpn617tbCR+HaWO+p4ZfC8ZDLBxvYkL+gPhmPKSAG\nP69m24DhtjR12ZwH+AU9pqV2S8V+jsUfXN+uj6ECgYEAoTZ6AMMs2xXCsRsOjuS+\nxYk+UJhddOlljd9uPOKWE1uP9Z/E6bF19SyXmi1ZViFPE2L3c98fxZnNWtHfwHZ6\nkAfrfV6miI77nGJZXWjOyocSQSMdM1FwAiEpqLFlKJCb6WxaU6ZpPIZ85eTWhrCB\nD8fzLH9SK/mg5veAUrJX2fc=\n-----END PRIVATE KEY-----\n",
+        "client_email": "firebase-adminsdk-x15sp@iotservices-378810.iam.gserviceaccount.com",
+        "client_id": "109407259038237514227",
+        "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+        "token_uri": "https://oauth2.googleapis.com/token",
+        "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+        "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-x15sp%40iotservices-378810.iam.gserviceaccount.com"
+    }
+)
+
+FIREBASE_APP = firebase_admin.initialize_app(cred)
+
+
 # 'http://localhost:5173','http://127.0.0.1:8080'
 #  rest_framework settings
 REST_FRAMEWORK = {
@@ -123,10 +150,24 @@ REST_FRAMEWORK = {
     #     'rest_framework.permissions.IsAuthenticated'
     # ],
     # 'DEFAULT_AUTHENTICATION_CLASSES': (
-    #     'rest_framework.authentication.TokenAuthentication',
+    #      'rest_framework.authentication.TokenAuthentication',
+    #     'rest_framework.authentication.SessionAuthentication',
+    #        "users.authentication.FireBaseAuth",
        
     # ),
 } 
+AUTHENTICATION_BACKENDS = [
+    
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+    
+]
+
+
+
 # api key
 
 WIT_API = env('witAPI')

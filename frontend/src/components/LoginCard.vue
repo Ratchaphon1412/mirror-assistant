@@ -13,7 +13,7 @@
           src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/logo.svg"
           alt="logo"
         />
-        Assistants Service
+        Assistant Services
       </a>
       <!--login card-->
       <div
@@ -28,6 +28,7 @@
           <!--login google facebook and github -->
           <div class="mt-16 grid space-y-4">
             <button
+              @click="loginWithGoogle"
               class="group h-12 px-6 border-2 border-gray-300 dark:border-gray-700 rounded-full transition duration-300 hover:border-blue-400 focus:bg-blue-50 active:bg-blue-100"
             >
               <div class="relative flex items-center space-x-4 justify-center">
@@ -43,6 +44,7 @@
               </div>
             </button>
             <button
+              @click="loginWithGithub"
               class="group h-12 px-6 border-2 border-gray-300 dark:border-gray-700 rounded-full transition duration-300 hover:border-blue-400 focus:bg-blue-50 active:bg-blue-100"
             >
               <div class="relative flex items-center space-x-4 justify-center">
@@ -58,11 +60,12 @@
                 </svg>
                 <span
                   class="block w-max font-semibold tracking-wide text-gray-700 dark:text-white text-sm transition duration-300 group-hover:text-blue-600 sm:text-base"
-                  >Continue with Github</span
+                  >Continue with GitHub</span
                 >
               </div>
             </button>
             <button
+              @click="loginWithFacebook"
               class="group h-12 px-6 border-2 border-gray-300 dark:border-gray-700 rounded-full transition duration-300 hover:border-blue-400 focus:bg-blue-50 active:bg-blue-100"
             >
               <div class="relative flex items-center space-x-4 justify-center">
@@ -120,13 +123,6 @@
                 v-model="password"
               />
             </div>
-            <div class="flex items-center justify-between">
-              <a
-                href="#"
-                class="text-sm font-medium text-gray-500 hover:underline dark:text-white"
-                >Forgot password?</a
-              >
-            </div>
 
             <button
               type="submit"
@@ -140,7 +136,7 @@
               <router-link
                 to="/register"
                 class="font-medium text-primary-600 hover:underline dark:text-primary-500"
-                >Sign up</router-link
+                >Sign up with you email</router-link
               >
             </p>
           </form>
@@ -152,7 +148,7 @@
 </template>
 
 <script>
-import { useAuthStore } from "@/stores/authfirebase.js";
+import { useAuthStore } from "@/stores/auth.js";
 export default {
   name: "LoginCard",
   setup() {
@@ -172,7 +168,38 @@ export default {
 
   components: {},
   methods: {
-    async login() {},
+    async login() {
+      try {
+        await this.authStore.login(this.email, this.password);
+        this.$router.push({ name: "ai" });
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    async loginWithGoogle() {
+      try {
+        await this.authStore.loginGoogle();
+        this.$router.push({ name: "ai" });
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    async loginWithFacebook() {
+      try {
+        await this.authStore.loginFacebook();
+        this.$router.push({ name: "ai" });
+      } catch (err) {
+        console.log(err);
+      }
+    },
+    async loginWithGithub() {
+      try {
+        await this.authStore.loginGithub();
+        this.$router.push({ name: "ai" });
+      } catch (err) {
+        console.log(err);
+      }
+    },
   },
 };
 </script>

@@ -1,7 +1,8 @@
 import axios from 'axios';
 import { useAuthStore } from '@/stores/auth';
 
-const baseURL = 'https://ratchaphon1412.co/';
+// const baseURL = 'https://ratchaphon1412.co/';
+const baseURL = 'http://localhost:8000/';
 
 const axiosInstance = axios.create({
   baseURL,
@@ -12,7 +13,7 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use((config) => {
   const authStore = useAuthStore();
   if (authStore.isAuthenticated) {
-    config.headers.Authorization = `Token ${authStore.token}`;
+    config.headers.Authorization = `Bearer ${authStore.token}`;
   }
   return config;
 });
