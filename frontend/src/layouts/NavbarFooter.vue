@@ -1,7 +1,7 @@
 <template>
   <section class="dark:bg-gray-900 bg-gray-100 h-screen">
     <Navbar />
-    <div class="mx-auto w-full h-full">
+    <div class="mx-auto w-full">
       <slot />
     </div>
     <Footer />

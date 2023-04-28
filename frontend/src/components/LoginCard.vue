@@ -1,7 +1,7 @@
 <template>
-  <section class="bg-gray-50 dark:bg-gray-900 w-full mx-auto">
+  <section class="bg-gray-50 dark:bg-gray-900 w-full mx-auto p-8">
     <div
-      class="px-6 py-8 mx-auto h-screen md:h-screen lg:py-0 "
+      class="block p-8 mx-auto h-full lg:py-0 "
     >
       <!--logo-->
       <div class="flex justify-center pt-9">
@@ -21,9 +21,9 @@
 
       <!--login card-->
       <div
-        class="w-full bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700 mx-auto pd-9"
+        class="bg-white rounded-lg shadow dark:border sm:max-w-md xl:p-0 dark:bg-gray-800 dark:border-gray-700 mx-auto"
       >
-        <div class="p-6 space-y-4 md:space-y-6 sm:p-8">
+        <div class="block p-6 space-y-4 md:space-y-6 sm:p-8 pb-4">
           <h1
             class="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white"
           >
