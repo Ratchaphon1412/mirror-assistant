@@ -32,6 +32,7 @@ export  const useAuthStore = defineStore('auth',{
           const response = await axios.post('/api/users/firebase/auth/',{"token":this.token})
           console.log(response.data);
           this.isAuthenticated = true
+          this.$router.push({ name: "ai" });
           // ...
         }).catch((error) => {
           const errorCode = error.code;
@@ -71,7 +72,8 @@ export  const useAuthStore = defineStore('auth',{
         console.log(this.token);
         const response = await axios.post('/api/users/firebase/auth/',{"token":this.token})
         console.log(response.data);
-        this.isAuthenticated = true
+        this.isAuthenticated = 
+        this.$router.push({ name: "ai" });
         const user = result.user;
         console.log(user);
         // ...
@@ -97,6 +99,7 @@ export  const useAuthStore = defineStore('auth',{
         const response = await axios.post('/api/users/firebase/auth/',{"token":this.token})
         console.log(response.data);
         this.isAuthenticated = true
+        this.$router.push({ name: "ai" });
         const user = result.user;
         console.log(user);
 
@@ -126,6 +129,7 @@ export  const useAuthStore = defineStore('auth',{
         const response = await axios.post('/api/users/firebase/auth/',{"token":this.token})
         console.log(response.data);
         this.isAuthenticated = true
+        this.$router.push({ name: "ai" });
         const user = result.user;
         console.log(user);
 

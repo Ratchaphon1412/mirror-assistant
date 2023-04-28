@@ -171,7 +171,7 @@ export default {
     async login() {
       try {
         await this.authStore.login(this.email, this.password);
-        this.$router.push({ name: "ai" });
+        // this.$router.push({ name: "ai" });
       } catch (err) {
         console.log(err);
       }
@@ -179,7 +179,7 @@ export default {
     async loginWithGoogle() {
       try {
         await this.authStore.loginGoogle();
-        this.$router.push({ name: "ai" });
+        // this.$router.push({ name: "ai" });
       } catch (err) {
         console.log(err);
       }
@@ -187,7 +187,7 @@ export default {
     async loginWithFacebook() {
       try {
         await this.authStore.loginFacebook();
-        this.$router.push({ name: "ai" });
+        // this.$router.push({ name: "ai" });
       } catch (err) {
         console.log(err);
       }
@@ -195,7 +195,7 @@ export default {
     async loginWithGithub() {
       try {
         await this.authStore.loginGithub();
-        this.$router.push({ name: "ai" });
+        // this.$router.push({ name: "ai" });
       } catch (err) {
         console.log(err);
       }
